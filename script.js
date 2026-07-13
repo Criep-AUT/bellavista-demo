@@ -2,57 +2,99 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const menuToggle = document.querySelector(".menu-toggle");
   const navLinks = document.querySelector(".nav-links");
+  const body = document.body;
+
 
   if (!menuToggle || !navLinks) {
     return;
   }
 
-  // Menü öffnen und schließen
-  menuToggle.addEventListener("click", () => {
 
-    const isOpen = navLinks.classList.toggle("active");
+  function closeMenu() {
 
-    menuToggle.classList.toggle("active");
+    navLinks.classList.remove("active");
+
+    menuToggle.classList.remove("active");
+
+    body.classList.remove("menu-open");
 
     menuToggle.setAttribute(
       "aria-expanded",
-      isOpen ? "true" : "false"
+      "false"
     );
+
+    menuToggle.setAttribute(
+      "aria-label",
+      "Menü öffnen"
+    );
+
+  }
+
+
+  function openMenu() {
+
+    navLinks.classList.add("active");
+
+    menuToggle.classList.add("active");
+
+    body.classList.add("menu-open");
+
+    menuToggle.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    menuToggle.setAttribute(
+      "aria-label",
+      "Menü schließen"
+    );
+
+  }
+
+
+  menuToggle.addEventListener("click", () => {
+
+    const isOpen = navLinks.classList.contains("active");
+
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
 
   });
 
 
-  // Menü schließen, wenn ein Navigationslink angeklickt wird
-  navLinks.querySelectorAll("a").forEach((link) => {
+  navLinks
+    .querySelectorAll("a")
+    .forEach((link) => {
 
-    link.addEventListener("click", () => {
-
-      navLinks.classList.remove("active");
-      menuToggle.classList.remove("active");
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
 
     });
 
+
+  document.addEventListener("keydown", (event) => {
+
+    if (
+      event.key === "Escape" &&
+      navLinks.classList.contains("active")
+    ) {
+      closeMenu();
+    }
+
   });
 
 
-  // ESC-Taste schließt das Menü
-  document.addEventListener("keydown", (event) => {
+  window.addEventListener("resize", () => {
 
-    if (event.key === "Escape") {
-
-      navLinks.classList.remove("active");
-      menuToggle.classList.remove("active");
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
+    if (
+      window.innerWidth > 800 &&
+      navLinks.classList.contains("active")
+    ) {
+      closeMenu();
     }
 
   });
