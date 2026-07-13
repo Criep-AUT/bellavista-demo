@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ristorante Bellavista | Cucina Italiana in Graz</title>
+
+  <meta name="description" content="Ristorante Bellavista in Graz – authentische italienische Küche, hausgemachte Pasta und mediterrane Gastfreundschaft. Jetzt Tisch reservieren.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #f5f1e8;
+      line-height: 1.6;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 40px;
+
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.45),
+          rgba(0,0,0,0.75)
+        ),
+        url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1800&q=85");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    .eyebrow {
+      color: #d6b77a;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(52px, 10vw, 110px);
+      font-weight: normal;
+      line-height: 0.95;
+      margin-bottom: 25px;
+    }
+
+    .subtitle {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #ddd5c7;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 28px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: #d6b77a;
+      color: #121212;
+    }
+
+    .btn-primary:hover {
+      background: #ead29f;
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.6);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: #fff;
+      color: #121212;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      nav {
+        justify-content: center;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      h1 {
+        font-size: 54px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 230px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav>
+
+    <div class="logo">
+      BELLAVISTA
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#about">Über uns</a></li>
+      <li><a href="#menu">Speisekarte</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+
+  </nav>
+
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        Cucina Italiana · Graz
+      </div>
+
+      <h1>
+        Bellavista
+      </h1>
+
+      <p class="subtitle">
+        Wo italienische Tradition auf moderne Gastfreundschaft trifft.
+      </p>
+
+      <div class="buttons">
+
+        <a href="#reservation" class="btn btn-primary">
+          Tisch reservieren
+        </a>
+
+        <a href="#menu" class="btn btn-secondary">
+          Speisekarte entdecken
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+</html>
