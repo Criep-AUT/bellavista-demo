@@ -182,15 +182,15 @@ const restaurantConfig = {
 
     reservations: {
 
-      enabled: true,
+      enabled: false,
 
-      status: "trial",
+      status: "inactive",
 
-      validFrom: "2026-07-14",
+      validFrom: null,
 
-      validUntil: "2026-10-14",
+      validUntil: null,
 
-      gracePeriodDays: 7,
+      gracePeriodDays: 0,
 
       monthlyPrice: 19.90
 
