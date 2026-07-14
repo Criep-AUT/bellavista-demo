@@ -185,8 +185,8 @@ textarea {
   position: relative;
   z-index: 2003;
 
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   padding: 10px;
 
   background: transparent;
@@ -195,19 +195,27 @@ textarea {
   cursor: pointer;
 }
 
-.menu-toggle span {
-  display: block;
+.menu-toggle {
+  display: none;
 
-  width: 26px;
-  height: 2px;
-  margin: 5px auto;
+  position: relative;
+  z-index: 2003;
 
-  background: #ffffff;
-  border-radius: 2px;
+  width: 56px;
+  height: 56px;
 
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+
+  overflow: visible;
 }
 
 .menu-toggle.active span:nth-child(1) {
