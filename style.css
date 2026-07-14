@@ -1227,3 +1227,6 @@ footer {
     transform: none;
   }
    }
+.module-hidden {
+  display: none !important;
+}
