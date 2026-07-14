@@ -1,4 +1,13 @@
 // ========================================
+// SCROLL-POSITION BEIM SEITENSTART
+// ========================================
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+
+// ========================================
 // ELEMENTE
 // ========================================
 
@@ -12,10 +21,28 @@ const reservationDate = document.querySelector('input[name="date"]');
 
 
 // ========================================
+// BEIM NORMALEN SEITENAUFRUF OBEN STARTEN
+// ========================================
+
+window.addEventListener("load", () => {
+
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+
+});
+
+
+// ========================================
 // HAMBURGER-MENÜ
 // ========================================
 
 function openMenu() {
+
+  if (!menuToggle || !navLinks) {
+    return;
+  }
+
   menuToggle.classList.add("active");
   navLinks.classList.add("active");
   document.body.classList.add("menu-open");
@@ -26,6 +53,11 @@ function openMenu() {
 
 
 function closeMenu() {
+
+  if (!menuToggle || !navLinks) {
+    return;
+  }
+
   menuToggle.classList.remove("active");
   navLinks.classList.remove("active");
   document.body.classList.remove("menu-open");
@@ -36,6 +68,11 @@ function closeMenu() {
 
 
 function toggleMenu() {
+
+  if (!navLinks) {
+    return;
+  }
+
   const isOpen = navLinks.classList.contains("active");
 
   if (isOpen) {
@@ -43,6 +80,7 @@ function toggleMenu() {
   } else {
     openMenu();
   }
+
 }
 
 
@@ -96,7 +134,11 @@ function updateNavbar() {
 }
 
 
-window.addEventListener("scroll", updateNavbar);
+window.addEventListener(
+  "scroll",
+  updateNavbar,
+  { passive: true }
+);
 
 updateNavbar();
 
@@ -108,6 +150,7 @@ updateNavbar();
 if ("IntersectionObserver" in window) {
 
   const revealObserver = new IntersectionObserver(
+
     (entries, observer) => {
 
       entries.forEach((entry) => {
@@ -123,10 +166,12 @@ if ("IntersectionObserver" in window) {
       });
 
     },
+
     {
       threshold: 0.12,
       rootMargin: "0px 0px -40px 0px"
     }
+
   );
 
 
@@ -147,7 +192,11 @@ if ("IntersectionObserver" in window) {
 // HEUTIGES DATUM FÜR RESERVIERUNG
 // ========================================
 
-if (reservationDate) {
+function setMinimumReservationDate() {
+
+  if (!reservationDate) {
+    return;
+  }
 
   const today = new Date();
 
@@ -161,11 +210,13 @@ if (reservationDate) {
     today.getDate()
   ).padStart(2, "0");
 
-  const todayFormatted = `${year}-${month}-${day}`;
-
-  reservationDate.min = todayFormatted;
+  reservationDate.min =
+    `${year}-${month}-${day}`;
 
 }
+
+
+setMinimumReservationDate();
 
 
 // ========================================
@@ -174,39 +225,41 @@ if (reservationDate) {
 
 if (reservationForm) {
 
-  reservationForm.addEventListener("submit", (event) => {
+  reservationForm.addEventListener(
+    "submit",
+    (event) => {
 
-    event.preventDefault();
-
-
-    const formData = new FormData(reservationForm);
-
-    const guestName = formData.get("name");
-
-    const reservationDay = formData.get("date");
-
-    const guests = formData.get("guests");
+      event.preventDefault();
 
 
-    alert(
-      `Danke ${guestName}!\n\n` +
-      `Ihre Reservierungsanfrage für ${guests} Person(en) ` +
-      `am ${reservationDay} wurde in dieser Demo erfasst.\n\n` +
-      `In der echten Restaurant-Version wird die Anfrage ` +
-      `direkt an das Restaurant übermittelt.`
-    );
+      const formData =
+        new FormData(reservationForm);
+
+      const guestName =
+        formData.get("name");
+
+      const reservationDay =
+        formData.get("date");
+
+      const guests =
+        formData.get("guests");
 
 
-    reservationForm.reset();
+      alert(
+        `Danke ${guestName}!\n\n` +
+        `Ihre Reservierungsanfrage für ${guests} Person(en) ` +
+        `am ${reservationDay} wurde in dieser Demo erfasst.\n\n` +
+        `In der echten Restaurant-Version wird die Anfrage ` +
+        `direkt an das Restaurant übermittelt.`
+      );
 
 
-    if (reservationDate) {
-      reservationDate.min = new Date()
-        .toISOString()
-        .split("T")[0];
+      reservationForm.reset();
+
+      setMinimumReservationDate();
+
     }
-
-  });
+  );
 
 }
 
