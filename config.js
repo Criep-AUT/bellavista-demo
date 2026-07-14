@@ -187,7 +187,7 @@ const restaurantConfig = {
   validUntil: "2026-10-14",
   gracePeriodDays: 7,
   monthlyPrice: 19.90
-}
+},
 
 
     // ----------------------------------------
