@@ -265,7 +265,6 @@ function applyModuleVisibility() {
   const moduleSections =
     getAllElements("[data-module-section]");
 
-
   moduleSections.forEach((element) => {
 
     const moduleName =
@@ -274,14 +273,16 @@ function applyModuleVisibility() {
     const active =
       isModuleActive(moduleName);
 
-    element.hidden = !active;
+    element.classList.toggle(
+      "module-hidden",
+      !active
+    );
 
   });
 
 
   const moduleLinks =
     getAllElements("[data-module-link]");
-
 
   moduleLinks.forEach((element) => {
 
@@ -291,7 +292,10 @@ function applyModuleVisibility() {
     const active =
       isModuleActive(moduleName);
 
-    element.hidden = !active;
+    element.classList.toggle(
+      "module-hidden",
+      !active
+    );
 
   });
 
