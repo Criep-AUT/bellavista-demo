@@ -9,16 +9,15 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Ristorante Bellavista | Cucina Italiana in Graz</title>
+  <title>Restaurant Website</title>
 
   <meta
     name="description"
-    content="Ristorante Bellavista in Graz – authentische italienische Küche, hausgemachte Pasta und mediterrane Gastfreundschaft. Jetzt Tisch reservieren."
+    content="Restaurant Website"
   >
 
   <meta name="theme-color" content="#121212">
 
-  <!-- Cache-Busting erzwingt die aktuelle CSS-Version -->
   <link rel="stylesheet" href="style.css?v=7">
 </head>
 
@@ -34,9 +33,10 @@
     <a
       href="#home"
       class="logo"
-      aria-label="Bellavista Startseite"
+      id="restaurant-logo"
+      aria-label="Zur Startseite"
     >
-      BELLAVISTA
+      RESTAURANT
     </a>
 
 
@@ -59,27 +59,39 @@
     >
 
       <li>
-        <a href="#about">Über uns</a>
+        <a href="#about">
+          Über uns
+        </a>
+      </li>
+
+      <li data-module-link="menu">
+        <a href="#menu">
+          Speisekarte
+        </a>
+      </li>
+
+      <li data-module-link="gallery">
+        <a href="#gallery">
+          Galerie
+        </a>
+      </li>
+
+      <li data-module-link="reviews">
+        <a href="#reviews">
+          Bewertungen
+        </a>
+      </li>
+
+      <li data-module-link="reservations">
+        <a href="#reservation">
+          Reservieren
+        </a>
       </li>
 
       <li>
-        <a href="#menu">Speisekarte</a>
-      </li>
-
-      <li>
-        <a href="#gallery">Galerie</a>
-      </li>
-
-      <li>
-        <a href="#reviews">Bewertungen</a>
-      </li>
-
-      <li>
-        <a href="#reservation">Reservieren</a>
-      </li>
-
-      <li>
-        <a href="#visit">Besuchen</a>
+        <a href="#visit">
+          Besuchen
+        </a>
       </li>
 
     </ul>
@@ -101,16 +113,22 @@
 
       <div class="hero-content reveal">
 
-        <div class="eyebrow">
-          Cucina Italiana · Graz
+        <div
+          class="eyebrow"
+          id="hero-eyebrow"
+        >
+          Restaurant
         </div>
 
-        <h1>
-          Bellavista
+        <h1 id="hero-title">
+          Restaurant
         </h1>
 
-        <p class="subtitle">
-          Wo italienische Tradition auf moderne Gastfreundschaft trifft.
+        <p
+          class="subtitle"
+          id="hero-subtitle"
+        >
+          Willkommen bei uns.
         </p>
 
 
@@ -119,6 +137,7 @@
           <a
             href="#reservation"
             class="btn btn-primary"
+            data-module-link="reservations"
           >
             Tisch reservieren
           </a>
@@ -126,6 +145,7 @@
           <a
             href="#menu"
             class="btn btn-secondary"
+            data-module-link="menu"
           >
             Speisekarte entdecken
           </a>
@@ -154,8 +174,9 @@
 
           <img
             class="about-image"
-            src="https://images.unsplash.com/photo-1579684947550-22e945225d9a?auto=format&fit=crop&w=1200&q=85"
-            alt="Italienische Küche im Ristorante Bellavista"
+            id="about-image"
+            src=""
+            alt="Restaurant"
             loading="lazy"
           >
 
@@ -164,23 +185,21 @@
 
         <div class="about-copy reveal">
 
-          <div class="section-label">
-            La nostra storia
+          <div
+            class="section-label"
+            id="about-label"
+          >
+            Über uns
           </div>
 
-          <h2 class="section-title">
-            Italien beginnt am Tisch.
+          <h2
+            class="section-title"
+            id="about-title"
+          >
+            Willkommen.
           </h2>
 
-          <p class="section-text">
-            Im Bellavista verbinden wir traditionelle italienische Rezepte
-            mit modernen Ideen und sorgfältig ausgewählten Zutaten.
-          </p>
-
-          <p class="section-text">
-            Hausgemachte Pasta, aromatische Tomaten, feines Olivenöl und
-            ehrliche Gastfreundschaft stehen im Mittelpunkt unserer Küche.
-          </p>
+          <div id="about-paragraphs"></div>
 
         </div>
 
@@ -201,7 +220,7 @@
         <div class="signature-header reveal">
 
           <div class="section-label">
-            I nostri preferiti
+            Unsere Empfehlungen
           </div>
 
           <h2 class="section-title">
@@ -209,113 +228,16 @@
           </h2>
 
           <p class="section-text centered-text">
-            Drei Gerichte, die zeigen, wofür das Bellavista steht:
-            ehrliche Zutaten, italienische Tradition und moderner Genuss.
+            Eine Auswahl besonderer Gerichte unseres Hauses.
           </p>
 
         </div>
 
 
-        <div class="dish-grid">
-
-
-          <article class="dish-card reveal">
-
-            <div class="dish-image-wrap">
-
-              <img
-                src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85"
-                alt="Hausgemachte Tagliatelle mit Trüffel"
-                loading="lazy"
-              >
-
-            </div>
-
-            <div class="dish-content">
-
-              <h3 class="dish-title">
-                Tagliatelle al Tartufo
-              </h3>
-
-              <p class="dish-description">
-                Hausgemachte Tagliatelle, Trüffelcreme und
-                Parmigiano Reggiano.
-              </p>
-
-              <div class="dish-price">
-                € 21,90
-              </div>
-
-            </div>
-
-          </article>
-
-
-
-          <article class="dish-card reveal">
-
-            <div class="dish-image-wrap">
-
-              <img
-                src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85"
-                alt="Pizza Bellavista"
-                loading="lazy"
-              >
-
-            </div>
-
-            <div class="dish-content">
-
-              <h3 class="dish-title">
-                Pizza Bellavista
-              </h3>
-
-              <p class="dish-description">
-                San-Marzano-Tomaten, Fior di Latte,
-                Prosciutto und Rucola.
-              </p>
-
-              <div class="dish-price">
-                € 16,90
-              </div>
-
-            </div>
-
-          </article>
-
-
-
-          <article class="dish-card reveal">
-
-            <div class="dish-image-wrap">
-
-              <img
-                src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85"
-                alt="Klassisches italienisches Tiramisù"
-                loading="lazy"
-              >
-
-            </div>
-
-            <div class="dish-content">
-
-              <h3 class="dish-title">
-                Tiramisù Classico
-              </h3>
-
-              <p class="dish-description">
-                Mascarpone, Espresso, Savoiardi und feiner Kakao.
-              </p>
-
-              <div class="dish-price">
-                € 8,50
-              </div>
-
-            </div>
-
-          </article>
-
-        </div>
+        <div
+          class="dish-grid"
+          id="signature-dishes"
+        ></div>
 
       </div>
 
@@ -330,6 +252,7 @@
     <section
       class="section"
       id="menu"
+      data-module-section="menu"
     >
 
       <div class="container">
@@ -337,7 +260,7 @@
         <div class="menu-header reveal">
 
           <div class="section-label">
-            La carta
+            Speisekarte
           </div>
 
           <h2 class="section-title">
@@ -345,147 +268,16 @@
           </h2>
 
           <p class="section-text">
-            Klassiker und moderne Interpretationen
-            aus verschiedenen Regionen Italiens.
+            Entdecken Sie eine Auswahl unserer Gerichte.
           </p>
 
         </div>
 
 
-        <div class="menu-grid">
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Bruschetta Classica
-              </span>
-
-              <span class="menu-price">
-                € 8,90
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Geröstetes Brot, Tomaten, Basilikum und natives Olivenöl.
-            </p>
-
-          </div>
-
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Burrata Pugliese
-              </span>
-
-              <span class="menu-price">
-                € 13,90
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Cremige Burrata, Tomaten, Basilikum und Olivenöl.
-            </p>
-
-          </div>
-
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Spaghetti Carbonara
-              </span>
-
-              <span class="menu-price">
-                € 17,90
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Guanciale, Pecorino Romano, Eigelb und schwarzer Pfeffer.
-            </p>
-
-          </div>
-
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Risotto ai Funghi
-              </span>
-
-              <span class="menu-price">
-                € 19,50
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Cremiges Risotto mit Pilzen, Parmesan und Kräutern.
-            </p>
-
-          </div>
-
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Saltimbocca alla Romana
-              </span>
-
-              <span class="menu-price">
-                € 24,90
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Kalbfleisch, Prosciutto, Salbei und Weißweinjus.
-            </p>
-
-          </div>
-
-
-
-          <div class="menu-item reveal">
-
-            <div class="menu-top">
-
-              <span class="menu-name">
-                Panna Cotta
-              </span>
-
-              <span class="menu-price">
-                € 7,90
-              </span>
-
-            </div>
-
-            <p class="menu-description">
-              Klassische Panna Cotta mit saisonalen Früchten.
-            </p>
-
-          </div>
-
-        </div>
+        <div
+          class="menu-grid"
+          id="menu-items"
+        ></div>
 
       </div>
 
@@ -500,6 +292,7 @@
     <section
       class="section gallery-section"
       id="gallery"
+      data-module-section="gallery"
     >
 
       <div class="container">
@@ -507,68 +300,24 @@
         <div class="gallery-header reveal">
 
           <div class="section-label">
-            Atmosfera
+            Atmosphäre
           </div>
 
           <h2 class="section-title">
-            Ein Blick ins Bellavista.
+            Ein Blick zu uns.
           </h2>
 
           <p class="section-text">
-            Italienische Küche, entspannte Abende und Momente,
-            die man gerne ein wenig länger genießt.
+            Eindrücke aus unserem Restaurant.
           </p>
 
         </div>
 
 
-        <div class="gallery-grid">
-
-
-          <figure class="gallery-item gallery-large reveal">
-
-            <img
-              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85"
-              alt="Stilvoller Restaurant-Innenraum"
-              loading="lazy"
-            >
-
-          </figure>
-
-
-          <figure class="gallery-item reveal">
-
-            <img
-              src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=85"
-              alt="Gemütlicher Tisch im Restaurant"
-              loading="lazy"
-            >
-
-          </figure>
-
-
-          <figure class="gallery-item reveal">
-
-            <img
-              src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"
-              alt="Restaurant-Atmosphäre am Abend"
-              loading="lazy"
-            >
-
-          </figure>
-
-
-          <figure class="gallery-item gallery-wide reveal">
-
-            <img
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=85"
-              alt="Italienisches Gericht im Bellavista"
-              loading="lazy"
-            >
-
-          </figure>
-
-        </div>
+        <div
+          class="gallery-grid"
+          id="gallery-grid"
+        ></div>
 
       </div>
 
@@ -583,6 +332,7 @@
     <section
       class="section reviews-section"
       id="reviews"
+      data-module-section="reviews"
     >
 
       <div class="container">
@@ -598,23 +348,30 @@
             Gastfreundschaft, die in Erinnerung bleibt.
           </h2>
 
+
           <div class="rating-summary">
 
-            <span class="rating-score">
-              4,8
+            <span
+              class="rating-score"
+              id="rating-score"
+            >
+              5,0
             </span>
 
             <div>
 
               <div
                 class="stars"
-                aria-label="4,8 von 5 Sternen"
+                aria-label="Bewertung"
               >
                 ★★★★★
               </div>
 
-              <p class="rating-text">
-                Beispielbewertung · Demo
+              <p
+                class="rating-text"
+                id="rating-source"
+              >
+                Gästebewertungen
               </p>
 
             </div>
@@ -624,65 +381,10 @@
         </div>
 
 
-        <div class="reviews-grid">
-
-
-          <article class="review-card reveal">
-
-            <div class="review-stars">
-              ★★★★★
-            </div>
-
-            <blockquote>
-              „Wunderbares Essen, großartige Atmosphäre und ein Service,
-              bei dem man sich sofort willkommen fühlt.“
-            </blockquote>
-
-            <p class="review-author">
-              — Anna M.
-            </p>
-
-          </article>
-
-
-
-          <article class="review-card reveal">
-
-            <div class="review-stars">
-              ★★★★★
-            </div>
-
-            <blockquote>
-              „Die Pasta war hervorragend und das Ambiente perfekt für
-              einen entspannten Abend zu zweit.“
-            </blockquote>
-
-            <p class="review-author">
-              — Markus K.
-            </p>
-
-          </article>
-
-
-
-          <article class="review-card reveal">
-
-            <div class="review-stars">
-              ★★★★★
-            </div>
-
-            <blockquote>
-              „Von der Vorspeise bis zum Tiramisù einfach ausgezeichnet.
-              Wir kommen definitiv wieder.“
-            </blockquote>
-
-            <p class="review-author">
-              — Julia S.
-            </p>
-
-          </article>
-
-        </div>
+        <div
+          class="reviews-grid"
+          id="reviews-grid"
+        ></div>
 
       </div>
 
@@ -697,12 +399,13 @@
     <section
       class="section reservation"
       id="reservation"
+      data-module-section="reservations"
     >
 
       <div class="container reservation-box reveal">
 
         <div class="section-label">
-          Prenotazione
+          Reservierung
         </div>
 
         <h2 class="section-title">
@@ -815,48 +518,22 @@
             Besuchen Sie uns
           </div>
 
-          <h2 class="section-title">
-            Mitten in Graz. Ein Stück Italien.
+          <h2
+            class="section-title"
+            id="visit-title"
+          >
+            Wir freuen uns auf Ihren Besuch.
           </h2>
 
           <p class="section-text">
-            Genießen Sie italienische Küche in entspannter Atmosphäre.
-            Wir freuen uns auf Ihren Besuch.
+            Genießen Sie gutes Essen in entspannter Atmosphäre.
           </p>
 
 
-          <div class="hours">
-
-            <div class="hours-row">
-              <span>Montag</span>
-              <span>Ruhetag</span>
-            </div>
-
-            <div class="hours-row">
-
-              <span>
-                Dienstag – Donnerstag
-              </span>
-
-              <span>
-                11:30 – 14:30
-                <br>
-                17:30 – 22:00
-              </span>
-
-            </div>
-
-            <div class="hours-row">
-              <span>Freitag – Samstag</span>
-              <span>11:30 – 23:00</span>
-            </div>
-
-            <div class="hours-row">
-              <span>Sonntag</span>
-              <span>11:30 – 21:00</span>
-            </div>
-
-          </div>
+          <div
+            class="hours"
+            id="opening-hours"
+          ></div>
 
         </div>
 
@@ -866,23 +543,18 @@
 
           <div class="address-card">
 
-            <strong>
-              Ristorante Bellavista
+            <strong id="address-name">
+              Restaurant
             </strong>
 
-            <p>
-              Musterstraße 12
-              <br>
-              8010 Graz
-              <br><br>
-              +43 316 123456
-              <br>
-              ciao@bellavista.at
+            <p id="address-details">
+              Adresse
             </p>
 
             <a
               href="#"
               class="address-link"
+              id="route-link"
             >
               Route planen →
             </a>
@@ -909,12 +581,18 @@
 
       <div>
 
-        <div class="footer-brand">
-          BELLAVISTA
+        <div
+          class="footer-brand"
+          id="footer-brand"
+        >
+          RESTAURANT
         </div>
 
-        <p class="footer-tagline">
-          Cucina Italiana · Graz
+        <p
+          class="footer-tagline"
+          id="footer-tagline"
+        >
+          Restaurant
         </p>
 
       </div>
@@ -926,11 +604,17 @@
           Über uns
         </a>
 
-        <a href="#menu">
+        <a
+          href="#menu"
+          data-module-link="menu"
+        >
           Speisekarte
         </a>
 
-        <a href="#reservation">
+        <a
+          href="#reservation"
+          data-module-link="reservations"
+        >
           Reservieren
         </a>
 
@@ -939,7 +623,10 @@
 
       <div class="footer-text">
 
-        © 2026 Ristorante Bellavista
+        <span id="footer-copyright">
+          © 2026 Restaurant
+        </span>
+
         <br>
 
         <a href="#">
@@ -959,8 +646,15 @@
   </footer>
 
 
-  <!-- Cache-Busting erzwingt die aktuelle JavaScript-Version -->
-  <script src="script.js?v=7"></script>
+  <!-- =====================================
+       SCRIPTS
+       
+       WICHTIG:
+       config.js muss VOR script.js geladen werden.
+  ====================================== -->
+
+  <script src="config.js?v=1"></script>
+  <script src="script.js?v=8"></script>
 
 </body>
 
