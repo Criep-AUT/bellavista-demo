@@ -18,7 +18,6 @@ if ("scrollRestoration" in history) {
 // KONFIGURATION LADEN
 // ========================================
 
-<<<<<<< HEAD
 let config = window.restaurantConfig || null;
 let configValidation = null;
 
@@ -469,15 +468,6 @@ function logConfigIssues(validationResult) {
   validationResult.warnings.forEach((message) => {
     console.warn(`Konfigurationswarnung: ${message}`);
   });
-=======
-const config = window.restaurantConfig;
-
-if (!config) {
-  console.error(
-    "Fehler: restaurantConfig wurde nicht gefunden. " +
-    "Prüfe, ob config.js vor script.js geladen wird."
-  );
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 }
 
 
@@ -511,7 +501,6 @@ function setImage(selector, src, alt = "") {
 
   const image = getElement(selector);
 
-<<<<<<< HEAD
   if (!image) {
     return;
   }
@@ -608,14 +597,6 @@ function initializeMediaImages(container = document) {
   images.forEach((image) => {
     initializeMediaImage(image);
   });
-=======
-  if (!image || !src) {
-    return;
-  }
-
-  image.src = src;
-  image.alt = alt;
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 }
 
 
@@ -861,24 +842,15 @@ function applyModuleVisibility() {
 function applyDesign() {
 
   const colors =
-<<<<<<< HEAD
     config?.design?.colors || {};
 
   const theme =
     config?.design?.theme || {};
-=======
-    config?.design?.colors;
-
-  if (!colors) {
-    return;
-  }
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 
 
   const root =
     document.documentElement;
 
-<<<<<<< HEAD
   function setThemeValue(property, value) {
     if (!isNonEmptyString(value)) {
       return;
@@ -887,18 +859,10 @@ function applyDesign() {
     root.style.setProperty(
       property,
       value
-=======
-
-  if (colors.background) {
-    root.style.setProperty(
-      "--bg",
-      colors.background
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     );
   }
 
 
-<<<<<<< HEAD
   // Bestehende colors-Konfiguration bleibt als Fallback erhalten.
   setThemeValue(
     "--color-background",
@@ -985,53 +949,6 @@ function applyDesign() {
 
   if (isNonEmptyString(theme.name)) {
     root.dataset.theme = theme.name;
-=======
-  if (colors.backgroundSoft) {
-    root.style.setProperty(
-      "--bg-soft",
-      colors.backgroundSoft
-    );
-  }
-
-
-  if (colors.backgroundCard) {
-    root.style.setProperty(
-      "--bg-card",
-      colors.backgroundCard
-    );
-  }
-
-
-  if (colors.textPrimary) {
-    root.style.setProperty(
-      "--cream",
-      colors.textPrimary
-    );
-  }
-
-
-  if (colors.textMuted) {
-    root.style.setProperty(
-      "--muted",
-      colors.textMuted
-    );
-  }
-
-
-  if (colors.accent) {
-    root.style.setProperty(
-      "--gold",
-      colors.accent
-    );
-  }
-
-
-  if (colors.accentLight) {
-    root.style.setProperty(
-      "--gold-light",
-      colors.accentLight
-    );
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
   }
 
 }
@@ -1260,7 +1177,6 @@ function renderSignatureDishes() {
 
   container.innerHTML =
     dishes
-<<<<<<< HEAD
       .map((dish) => {
 
         const safeDish =
@@ -1286,18 +1202,6 @@ function renderSignatureDishes() {
               alt="${escapeHtml(hasImage ? safeDish.name || "Gericht" : "")}"
               loading="lazy"
               decoding="async"
-=======
-      .map((dish) => `
-
-        <article class="dish-card reveal">
-
-          <div class="dish-image-wrap">
-
-            <img
-              src="${escapeHtml(dish.image || "")}"
-              alt="${escapeHtml(dish.name || "Gericht")}"
-              loading="lazy"
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
             >
 
           </div>
@@ -1306,36 +1210,23 @@ function renderSignatureDishes() {
           <div class="dish-content">
 
             <h3 class="dish-title">
-<<<<<<< HEAD
               ${escapeHtml(safeDish.name || "")}
-=======
-              ${escapeHtml(dish.name || "")}
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
             </h3>
 
 
             <p class="dish-description">
-<<<<<<< HEAD
               ${escapeHtml(safeDish.description || "")}
-=======
-              ${escapeHtml(dish.description || "")}
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
             </p>
 
 
             <div class="dish-price">
-<<<<<<< HEAD
               ${formatPrice(safeDish.price)}
-=======
-              ${formatPrice(dish.price)}
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
             </div>
 
           </div>
 
         </article>
 
-<<<<<<< HEAD
       `;
 
       })
@@ -1343,11 +1234,6 @@ function renderSignatureDishes() {
 
   initializeMediaImages(container);
 
-=======
-      `)
-      .join("");
-
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 }
 
 
@@ -1429,7 +1315,6 @@ function renderGallery() {
     images
       .map((image, index) => {
 
-<<<<<<< HEAD
         const safeImage =
           isPlainObject(image)
             ? image
@@ -1438,8 +1323,6 @@ function renderGallery() {
         const hasImage =
           isUsableImageSource(safeImage.image);
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
         let extraClass = "";
 
 
@@ -1457,7 +1340,6 @@ function renderGallery() {
 
           <figure
             class="gallery-item ${extraClass} reveal"
-<<<<<<< HEAD
             data-media-container
           >
 
@@ -1467,14 +1349,6 @@ function renderGallery() {
               alt="${escapeHtml(hasImage ? safeImage.alt || "Restaurant" : "")}"
               loading="lazy"
               decoding="async"
-=======
-          >
-
-            <img
-              src="${escapeHtml(image.image || "")}"
-              alt="${escapeHtml(image.alt || "Restaurant")}"
-              loading="lazy"
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
             >
 
           </figure>
@@ -1484,11 +1358,8 @@ function renderGallery() {
       })
       .join("");
 
-<<<<<<< HEAD
   initializeMediaImages(container);
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 }
 
 
@@ -1696,12 +1567,9 @@ function initializeNavigation() {
   const navLinks =
     getElement(".nav-links");
 
-<<<<<<< HEAD
   const navOverlay =
     getElement(".nav-overlay");
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
   const navigationLinks =
     getAllElements(".nav-links a");
 
@@ -1717,13 +1585,10 @@ function initializeNavigation() {
 
     navLinks.classList.add("active");
 
-<<<<<<< HEAD
     if (navOverlay) {
       navOverlay.classList.add("active");
     }
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     document.body.classList.add(
       "menu-open"
     );
@@ -1740,7 +1605,6 @@ function initializeNavigation() {
       "Menü schließen"
     );
 
-<<<<<<< HEAD
 
     const firstNavigationLink =
       navigationLinks[0];
@@ -1756,12 +1620,6 @@ function initializeNavigation() {
 
 
   function closeMenu(returnFocus = false) {
-=======
-  }
-
-
-  function closeMenu() {
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 
     if (!menuToggle || !navLinks) {
       return;
@@ -1772,13 +1630,10 @@ function initializeNavigation() {
 
     navLinks.classList.remove("active");
 
-<<<<<<< HEAD
     if (navOverlay) {
       navOverlay.classList.remove("active");
     }
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     document.body.classList.remove(
       "menu-open"
     );
@@ -1795,14 +1650,11 @@ function initializeNavigation() {
       "Menü öffnen"
     );
 
-<<<<<<< HEAD
 
     if (returnFocus && window.innerWidth <= 900) {
       menuToggle.focus();
     }
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
   }
 
 
@@ -1847,7 +1699,6 @@ function initializeNavigation() {
 
   });
 
-<<<<<<< HEAD
   if (navOverlay) {
     navOverlay.addEventListener(
       "click",
@@ -1855,24 +1706,17 @@ function initializeNavigation() {
     );
   }
 
-=======
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 
   document.addEventListener(
     "keydown",
     (event) => {
 
-<<<<<<< HEAD
       if (
         event.key === "Escape" &&
         navLinks?.classList.contains("active")
       ) {
         event.preventDefault();
         closeMenu(true);
-=======
-      if (event.key === "Escape") {
-        closeMenu();
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
       }
 
     }
@@ -2018,16 +1862,12 @@ function initializeReservationForm() {
 
 function initializeWebsite() {
 
-<<<<<<< HEAD
   config = window.restaurantConfig || null;
   configValidation = validateRestaurantConfig(config);
 
   logConfigIssues(configValidation);
 
   if (!configValidation.valid) {
-=======
-  if (!config) {
->>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     return;
   }
 
