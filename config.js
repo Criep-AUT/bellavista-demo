@@ -22,15 +22,23 @@ const restaurantConfig = {
 
   system: {
 
+<<<<<<< HEAD
     // Pflichtwerte für die Basisinitialisierung:
     // templateVersion, customerId, demoMode, currency und locale.
     templateVersion: "2.0.0",
+=======
+    templateVersion: "1.0.0",
+>>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
 
     customerId: "bellavista-001",
 
     demoMode: true,
 
     currency: "EUR",
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     locale: "de-AT"
 
   },
@@ -42,9 +50,12 @@ const restaurantConfig = {
 
   restaurant: {
 
+<<<<<<< HEAD
     // Pflichtwerte: name, fullName und city.
     // Alle weiteren Restaurantwerte sind optional.
 
+=======
+>>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     name: "Bellavista",
 
     fullName: "Ristorante Bellavista",
@@ -79,6 +90,7 @@ const restaurantConfig = {
 
   design: {
 
+<<<<<<< HEAD
     // Theme-Werte steuern die zentralen CSS-Farben.
     // Fehlende Werte verwenden die Template-Defaults.
     theme: {
@@ -105,6 +117,8 @@ const restaurantConfig = {
 
     },
 
+=======
+>>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
     colors: {
 
       background: "#11100f",
@@ -130,6 +144,7 @@ const restaurantConfig = {
   // MODULE
   // ========================================
   //
+<<<<<<< HEAD
   // Erlaubte Modulstatus:
   // included, trial, subscription, inactive, expired
   //
@@ -147,6 +162,15 @@ const restaurantConfig = {
   // demoMode:
   // Im Demo-Modus bleiben aktivierte Module sichtbar,
   // auch wenn ihre Statuslogik sonst nicht aktiv wäre.
+=======
+  // Mögliche Status:
+  //
+  // included
+  // trial
+  // subscription
+  // inactive
+  // expired
+>>>>>>> 55a1aedd7f9f8d9c5252c46522a18588125d2aa4
   //
   // ========================================
 
