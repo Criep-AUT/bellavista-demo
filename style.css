@@ -926,7 +926,7 @@ h1 {
   border-bottom: 1px solid var(--line);
 }
 
-.hours-row span:last-child {
+.hours-row dd {
   color: var(--muted);
   text-align: right;
 }
@@ -962,6 +962,7 @@ h1 {
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  font-style: normal;
 }
 
 .address-card strong {
@@ -973,7 +974,7 @@ h1 {
   font-weight: normal;
 }
 
-.address-card p {
+.address-details {
   color: var(--muted);
 }
 

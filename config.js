@@ -24,7 +24,7 @@ const restaurantConfig = {
 
     // Pflichtwerte für die Basisinitialisierung:
     // templateVersion, customerId, demoMode, currency und locale.
-    templateVersion: "2.0.0",
+    templateVersion: "2.3.0",
 
     customerId: "bellavista-001",
 
@@ -37,8 +37,143 @@ const restaurantConfig = {
 
 
   // ========================================
+  // IDENTITY
+  // ========================================
+  // Diese Werte haben Vorrang vor der alten
+  // restaurant-Struktur und machen das Template
+  // für neue Kunden konfigurierbarer.
+
+  identity: {
+
+    name: "Bellavista",
+
+    fullName: "Ristorante Bellavista",
+
+    slogan: "Cucina Italiana · Graz",
+
+    logoText: "Bellavista",
+
+    logoImage: "",
+    favicon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2311100f'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23d6b77a'%3EB%3C/text%3E%3C/svg%3E",
+
+    phone: "+43 316 123456",
+
+    email: "ciao@bellavista.at",
+
+    website: "https://bellavista.example",
+
+    street: "Musterstraße 12",
+
+    postalCode: "8010",
+
+    city: "Graz",
+
+    country: "Österreich",
+
+    googleMapsUrl: "",
+
+    whatsapp: "",
+    instagram: "",
+    facebook: "",
+    tiktok: "",
+    youtube: "",
+    linkedin: ""
+
+  },
+
+
+  // ========================================
+  // SEO
+  // ========================================
+
+  seo: {
+
+    title: "Ristorante Bellavista | Italienisches Restaurant in Graz",
+
+    description: "Italienische Küche, hausgemachte Pasta und herzliche Gastfreundschaft im Ristorante Bellavista in Graz.",
+
+    keywords: "restaurant, italienisch, graz",
+
+    author: "Bellavista",
+    robots: "index,follow",
+    canonical: "",
+    ogTitle: "",
+    ogDescription: "",
+    ogImage: "",
+    twitterTitle: "",
+    twitterDescription: "",
+    twitterImage: "",
+    themeColor: "#11100f",
+    language: "de-AT"
+
+  },
+
+
+  // ========================================
+  // LOCAL BUSINESS
+  // ========================================
+  // Leere Kontaktwerte verwenden automatisch
+  // die entsprechenden Werte der Identity Engine.
+
+  localBusiness: {
+
+    priceRange: "€€",
+
+    servesCuisine: [
+      "Italienisch",
+      "Mediterran"
+    ],
+
+    telephone: "",
+
+    email: "",
+
+    website: "",
+
+    geo: {
+      latitude: "",
+      longitude: ""
+    },
+
+    acceptsReservations: true,
+
+    currenciesAccepted: "EUR",
+
+    paymentAccepted: [
+      "Barzahlung",
+      "Debitkarte",
+      "Kreditkarte"
+    ],
+
+    areaServed: "Graz und Umgebung"
+
+  },
+
+
+  // ========================================
+  // LEGAL
+  // ========================================
+
+  legal: {
+
+    company: "Ristorante Bellavista",
+
+    owner: "Bellavista Team",
+
+    vatNumber: "ATU12345678",
+    commercialRegister: "Graz HRB 12345",
+    privacyUrl: "#privacy",
+    imprintUrl: "#imprint",
+    copyrightText: ""
+
+  },
+
+
+  // ========================================
   // RESTAURANT-STAMMDATEN
   // ========================================
+  // Diese Struktur bleibt als Fallback erhalten,
+  // damit bestehende Konfigurationen weiterhin funktionieren.
 
   restaurant: {
 
@@ -526,7 +661,9 @@ const restaurantConfig = {
 
       days: "Montag",
 
-      hours: "Ruhetag"
+      hours: "Ruhetag",
+
+      schemaHours: []
 
     },
 
@@ -534,7 +671,12 @@ const restaurantConfig = {
 
       days: "Dienstag – Donnerstag",
 
-      hours: "11:30 – 14:30 / 17:30 – 22:00"
+      hours: "11:30 – 14:30 / 17:30 – 22:00",
+
+      schemaHours: [
+        "Tu-Th 11:30-14:30",
+        "Tu-Th 17:30-22:00"
+      ]
 
     },
 
@@ -542,7 +684,11 @@ const restaurantConfig = {
 
       days: "Freitag – Samstag",
 
-      hours: "11:30 – 23:00"
+      hours: "11:30 – 23:00",
+
+      schemaHours: [
+        "Fr-Sa 11:30-23:00"
+      ]
 
     },
 
@@ -550,7 +696,11 @@ const restaurantConfig = {
 
       days: "Sonntag",
 
-      hours: "11:30 – 21:00"
+      hours: "11:30 – 21:00",
+
+      schemaHours: [
+        "Su 11:30-21:00"
+      ]
 
     }
 

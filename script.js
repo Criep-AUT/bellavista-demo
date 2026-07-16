@@ -36,7 +36,7 @@ function isValidDateString(value) {
     return false;
   }
 
-  const parsedDate = new Date(`${value}T00:00:00`);
+  const parsedDate = new Date(`${value}T00:00:00Z`);
 
   return !Number.isNaN(parsedDate.getTime()) &&
     parsedDate.toISOString().slice(0, 10) === value;
@@ -45,6 +45,63 @@ function isValidDateString(value) {
 
 function isPlainObject(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+
+function resolveConfigValue(configObject, key, fallbackValue = "") {
+  if (!isPlainObject(configObject)) {
+    return fallbackValue;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(configObject, key)) {
+    return fallbackValue;
+  }
+
+  const value = configObject[key];
+
+  if (value === null || value === undefined) {
+    return fallbackValue;
+  }
+
+  if (typeof value === "string") {
+    return value.trim() || fallbackValue;
+  }
+
+  return value;
+}
+
+
+function getIdentityValue(key, fallbackValue = "") {
+  const identityConfig = isPlainObject(config?.identity)
+    ? config.identity
+    : null;
+
+  if (identityConfig && Object.prototype.hasOwnProperty.call(identityConfig, key)) {
+    const identityValue = resolveConfigValue(identityConfig, key, "");
+    return identityValue || fallbackValue;
+  }
+
+  const restaurantConfig = isPlainObject(config?.restaurant)
+    ? config.restaurant
+    : null;
+
+  const restaurantValue = resolveConfigValue(restaurantConfig, key, "");
+
+  return restaurantValue || fallbackValue;
+}
+
+
+function isValidAbsoluteUrl(value) {
+  if (!isNonEmptyString(value)) {
+    return false;
+  }
+
+  try {
+    const parsedUrl = new URL(value);
+    return ["http:", "https:"].includes(parsedUrl.protocol);
+  } catch {
+    return false;
+  }
 }
 
 
@@ -128,38 +185,57 @@ function validateRestaurantConfig(configToValidate) {
 
 
   const restaurant = configToValidate.restaurant;
+  const identity = configToValidate.identity;
+
+  const effectiveIdentityName = resolveConfigValue(
+    identity,
+    "name",
+    resolveConfigValue(restaurant, "name", "")
+  );
+
+  const effectiveIdentityFullName = resolveConfigValue(
+    identity,
+    "fullName",
+    resolveConfigValue(restaurant, "fullName", "")
+  );
+
+  const effectiveIdentityCity = resolveConfigValue(
+    identity,
+    "city",
+    resolveConfigValue(restaurant, "city", "")
+  );
+
+  if (!isNonEmptyString(effectiveIdentityName)) {
+    pushConfigIssue(
+      result,
+      "error",
+      "identity.name ist ein nicht leerer String."
+    );
+  }
+
+  if (!isNonEmptyString(effectiveIdentityFullName)) {
+    pushConfigIssue(
+      result,
+      "error",
+      "identity.fullName ist ein nicht leerer String."
+    );
+  }
+
+  if (!isNonEmptyString(effectiveIdentityCity)) {
+    pushConfigIssue(
+      result,
+      "error",
+      "identity.city ist ein nicht leerer String."
+    );
+  }
 
   if (!isPlainObject(restaurant)) {
     pushConfigIssue(
       result,
-      "error",
-      "restaurant ist erforderlich."
+      "warning",
+      "restaurant ist nicht konfiguriert. Die identity-Struktur wird verwendet."
     );
   } else {
-    if (!isNonEmptyString(restaurant.name)) {
-      pushConfigIssue(
-        result,
-        "error",
-        "restaurant.name ist ein nicht leerer String."
-      );
-    }
-
-    if (!isNonEmptyString(restaurant.fullName)) {
-      pushConfigIssue(
-        result,
-        "error",
-        "restaurant.fullName ist ein nicht leerer String."
-      );
-    }
-
-    if (!isNonEmptyString(restaurant.city)) {
-      pushConfigIssue(
-        result,
-        "error",
-        "restaurant.city ist ein nicht leerer String."
-      );
-    }
-
     if (!isNonEmptyString(restaurant.phone)) {
       pushConfigIssue(
         result,
@@ -322,6 +398,26 @@ function validateRestaurantConfig(configToValidate) {
   });
 
 
+  if (Array.isArray(configToValidate.openingHours)) {
+    configToValidate.openingHours.forEach((entry, index) => {
+      if (!isPlainObject(entry) || entry.schemaHours === undefined) {
+        return;
+      }
+
+      if (
+        !Array.isArray(entry.schemaHours) ||
+        entry.schemaHours.some((value) => !isNonEmptyString(value))
+      ) {
+        pushConfigIssue(
+          result,
+          "warning",
+          `openingHours[${index}].schemaHours muss ein Array aus nicht leeren Strings sein.`
+        );
+      }
+    });
+  }
+
+
   if (configToValidate.reviews !== undefined) {
     if (!isPlainObject(configToValidate.reviews)) {
       pushConfigIssue(
@@ -358,6 +454,226 @@ function validateRestaurantConfig(configToValidate) {
       }
     }
   }
+
+
+  if (configToValidate.seo !== undefined) {
+    if (!isPlainObject(configToValidate.seo)) {
+      pushConfigIssue(
+        result,
+        "warning",
+        "seo muss ein Objekt sein, wenn vorhanden."
+      );
+    } else {
+      [
+        "title",
+        "description",
+        "keywords",
+        "author",
+        "robots",
+        "canonical",
+        "ogTitle",
+        "ogDescription",
+        "ogImage",
+        "twitterTitle",
+        "twitterDescription",
+        "twitterImage",
+        "themeColor",
+        "language"
+      ].forEach((key) => {
+        if (
+          configToValidate.seo[key] !== undefined &&
+          typeof configToValidate.seo[key] !== "string"
+        ) {
+          pushConfigIssue(
+            result,
+            "warning",
+            `seo.${key} muss ein String sein, wenn vorhanden.`
+          );
+        }
+      });
+
+      ["canonical", "ogImage", "twitterImage"].forEach((key) => {
+        const value = configToValidate.seo[key];
+
+        if (isNonEmptyString(value) && !isValidAbsoluteUrl(value)) {
+          pushConfigIssue(
+            result,
+            "warning",
+            `seo.${key} sollte eine absolute HTTP(S)-URL sein.`
+          );
+        }
+      });
+
+      if (
+        isNonEmptyString(configToValidate.seo.themeColor) &&
+        !/^#[0-9a-f]{6}$/i.test(configToValidate.seo.themeColor.trim())
+      ) {
+        pushConfigIssue(
+          result,
+          "warning",
+          "seo.themeColor sollte eine sechsstellige Hex-Farbe sein."
+        );
+      }
+
+      if (
+        isNonEmptyString(configToValidate.seo.language) &&
+        !/^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/i.test(configToValidate.seo.language.trim())
+      ) {
+        pushConfigIssue(
+          result,
+          "warning",
+          "seo.language sollte ein gültiger Sprachcode wie de-AT sein."
+        );
+      }
+    }
+  } else {
+    pushConfigIssue(
+      result,
+      "warning",
+      "seo ist nicht konfiguriert. Metadaten werden aus den Restaurantdaten erzeugt."
+    );
+  }
+
+
+  const localBusiness = configToValidate.localBusiness;
+
+  if (localBusiness === undefined) {
+    pushConfigIssue(
+      result,
+      "warning",
+      "localBusiness ist nicht konfiguriert. Schema.org verwendet verfügbare Identity-Fallbacks."
+    );
+  } else if (!isPlainObject(localBusiness)) {
+    pushConfigIssue(
+      result,
+      "warning",
+      "localBusiness muss ein Objekt sein, wenn vorhanden."
+    );
+  } else {
+    [
+      "priceRange",
+      "telephone",
+      "email",
+      "website",
+      "currenciesAccepted",
+      "areaServed"
+    ].forEach((key) => {
+      if (
+        localBusiness[key] !== undefined &&
+        typeof localBusiness[key] !== "string"
+      ) {
+        pushConfigIssue(
+          result,
+          "warning",
+          `localBusiness.${key} muss ein String sein, wenn vorhanden.`
+        );
+      }
+    });
+
+    ["servesCuisine", "paymentAccepted"].forEach((key) => {
+      const value = localBusiness[key];
+
+      if (
+        value !== undefined &&
+        typeof value !== "string" &&
+        !Array.isArray(value)
+      ) {
+        pushConfigIssue(
+          result,
+          "warning",
+          `localBusiness.${key} muss ein String oder Array sein, wenn vorhanden.`
+        );
+      }
+    });
+
+    if (
+      localBusiness.acceptsReservations !== undefined &&
+      typeof localBusiness.acceptsReservations !== "boolean"
+    ) {
+      pushConfigIssue(
+        result,
+        "warning",
+        "localBusiness.acceptsReservations muss ein Boolean sein, wenn vorhanden."
+      );
+    }
+
+    if (localBusiness.geo !== undefined && !isPlainObject(localBusiness.geo)) {
+      pushConfigIssue(
+        result,
+        "warning",
+        "localBusiness.geo muss ein Objekt sein, wenn vorhanden."
+      );
+    } else if (isPlainObject(localBusiness.geo)) {
+      [
+        ["latitude", -90, 90],
+        ["longitude", -180, 180]
+      ].forEach(([key, minimum, maximum]) => {
+        const value = localBusiness.geo[key];
+
+        if (value === "" || value === null || value === undefined) {
+          return;
+        }
+
+        const numericValue = Number(value);
+
+        if (
+          !Number.isFinite(numericValue) ||
+          numericValue < minimum ||
+          numericValue > maximum
+        ) {
+          pushConfigIssue(
+            result,
+            "warning",
+            `localBusiness.geo.${key} liegt außerhalb des gültigen Bereichs.`
+          );
+        }
+      });
+    }
+
+    if (
+      isNonEmptyString(localBusiness.website) &&
+      !isValidAbsoluteUrl(localBusiness.website)
+    ) {
+      pushConfigIssue(
+        result,
+        "warning",
+        "localBusiness.website sollte eine absolute HTTP(S)-URL sein."
+      );
+    }
+  }
+
+
+  if (configToValidate.identity !== undefined && !isPlainObject(configToValidate.identity)) {
+    pushConfigIssue(
+      result,
+      "warning",
+      "identity muss ein Objekt sein, wenn vorhanden."
+    );
+  }
+
+  [
+    "website",
+    "whatsapp",
+    "instagram",
+    "facebook",
+    "tiktok",
+    "youtube",
+    "linkedin"
+  ].forEach((socialKey) => {
+    const socialValue = resolveConfigValue(
+      configToValidate.identity,
+      socialKey,
+      ""
+    );
+
+    if (socialValue !== "" && typeof socialValue !== "string") {
+      pushConfigIssue(
+        result,
+        "warning",
+        `identity.${socialKey} muss ein String sein, wenn vorhanden.`
+      );
+    }
+  });
 
 
   if (configToValidate.about && isPlainObject(configToValidate.about)) {
@@ -608,6 +924,131 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+
+function setMetaTag(attributeName, content, attributeType = "name") {
+  const metaElements = Array.from(
+    document.head.querySelectorAll(
+      `meta[name="${attributeName}"], meta[property="${attributeName}"]`
+    )
+  );
+
+  if (!isNonEmptyString(content)) {
+    metaElements.forEach((element) => element.remove());
+    return;
+  }
+
+  let metaElement = metaElements.shift();
+
+  if (!metaElement) {
+    metaElement = document.createElement("meta");
+    document.head.appendChild(metaElement);
+  }
+
+  metaElements.forEach((duplicateElement) => duplicateElement.remove());
+  metaElement.removeAttribute(attributeType === "name" ? "property" : "name");
+  metaElement.setAttribute(attributeType, attributeName);
+  metaElement.content = content.trim();
+}
+
+
+function setLinkRel(rel, href) {
+  const linkElements = Array.from(
+    document.head.querySelectorAll(`link[rel="${rel}"]`)
+  );
+
+  if (!isNonEmptyString(href)) {
+    linkElements.forEach((element) => element.remove());
+    return;
+  }
+
+  let linkElement = linkElements.shift();
+
+  if (!linkElement) {
+    linkElement = document.createElement("link");
+    document.head.appendChild(linkElement);
+  }
+
+  linkElements.forEach((duplicateElement) => duplicateElement.remove());
+  linkElement.rel = rel;
+  linkElement.href = href.trim();
+}
+
+
+function setRestaurantSchema(schemaData) {
+  const schemaElements = Array.from(
+    document.head.querySelectorAll(
+      'script[type="application/ld+json"][data-restaurant-schema]'
+    )
+  );
+
+  let schemaElement = schemaElements.shift();
+
+  if (!schemaElement) {
+    schemaElement = document.createElement("script");
+    schemaElement.type = "application/ld+json";
+    schemaElement.dataset.restaurantSchema = "true";
+    document.head.appendChild(schemaElement);
+  }
+
+  schemaElements.forEach((duplicateElement) => duplicateElement.remove());
+  schemaElement.textContent = JSON.stringify(schemaData);
+}
+
+
+function renderSeoData() {
+  const seoUtils = window.RestaurantSeoUtils;
+
+  if (!seoUtils || typeof seoUtils.createSeoModel !== "function") {
+    console.warn("SEO-Utility fehlt. Die statischen SEO-Daten bleiben unverändert.");
+    return;
+  }
+
+  const seoModel = seoUtils.createSeoModel(config, {
+    locationHref: window.location.href,
+    acceptsReservationsFallback: isModuleActive("reservations")
+  });
+
+  document.documentElement.lang = seoModel.language;
+  document.title = seoModel.title;
+
+  setMetaTag("description", seoModel.description);
+  setMetaTag("keywords", seoModel.keywords);
+  setMetaTag("author", seoModel.author);
+  setMetaTag("robots", seoModel.robots);
+  setMetaTag("theme-color", seoModel.themeColor);
+  setMetaTag("og:type", seoModel.openGraph.type, "property");
+  setMetaTag("og:site_name", seoModel.openGraph.siteName, "property");
+  setMetaTag("og:locale", seoModel.openGraph.locale, "property");
+  setMetaTag("og:url", seoModel.openGraph.url, "property");
+  setMetaTag("og:title", seoModel.openGraph.title, "property");
+  setMetaTag("og:description", seoModel.openGraph.description, "property");
+  setMetaTag("og:image", seoModel.openGraph.image, "property");
+  setMetaTag("og:image:alt", seoModel.openGraph.imageAlt, "property");
+  setMetaTag("twitter:card", seoModel.twitter.card);
+  setMetaTag("twitter:title", seoModel.twitter.title);
+  setMetaTag("twitter:description", seoModel.twitter.description);
+  setMetaTag("twitter:image", seoModel.twitter.image);
+  setMetaTag("twitter:image:alt", seoModel.twitter.imageAlt);
+  setLinkRel("canonical", seoModel.canonicalUrl);
+  setLinkRel("icon", seoModel.favicon);
+  setLinkRel("apple-touch-icon", seoModel.favicon);
+
+  document.head
+    .querySelectorAll("link[data-seo-alternate]")
+    .forEach((element) => element.remove());
+
+  seoModel.alternates.forEach((alternate) => {
+    const linkElement = document.createElement("link");
+    linkElement.rel = "alternate";
+    linkElement.hreflang = alternate.language;
+    linkElement.href = alternate.href;
+    linkElement.dataset.seoAlternate = "true";
+    document.head.appendChild(linkElement);
+  });
+
+  setRestaurantSchema(seoModel.schema);
 }
 
 
@@ -963,62 +1404,82 @@ function renderRestaurantData() {
   const restaurant =
     config?.restaurant;
 
-  if (!restaurant) {
-    return;
-  }
+  const identityName = getIdentityValue("name", "Restaurant");
+  const identityFullName = getIdentityValue("fullName", identityName);
+  const identitySlogan = getIdentityValue("slogan", restaurant?.tagline || "");
+  const identityLogoText = getIdentityValue("logoText", identityName);
+  const identityPhone = getIdentityValue("phone", "");
+  const identityEmail = getIdentityValue("email", "");
+  const identityStreet = getIdentityValue("street", "");
+  const identityPostalCode = getIdentityValue("postalCode", "");
+  const identityCity = getIdentityValue("city", "");
+  const identityCountry = getIdentityValue("country", "");
+  const identityMapsUrl = getIdentityValue("googleMapsUrl", "");
+  const identityWebsite = getIdentityValue("website", "");
+  const legal = isPlainObject(config?.legal)
+    ? config.legal
+    : null;
+
+  const displayName = identityFullName || identityName || "Restaurant Website";
+  const displayCity = identityCity || restaurant?.city || "Ihre Stadt";
+  const displaySlogan = identitySlogan || restaurant?.tagline || "Willkommen bei uns.";
 
 
   setText(
     "#restaurant-logo",
-    restaurant.name?.toUpperCase()
+    identityLogoText.toUpperCase()
   );
 
 
   setText(
     "#hero-eyebrow",
-    restaurant.eyebrow
+    identitySlogan || restaurant?.eyebrow || identityName
   );
 
 
   setText(
     "#hero-title",
-    restaurant.heroTitle
+    identityName || restaurant?.heroTitle || "Restaurant"
   );
 
 
   setText(
     "#hero-subtitle",
-    restaurant.heroSubtitle
+    identitySlogan || restaurant?.heroSubtitle || "Willkommen bei uns."
   );
 
 
   setText(
     "#visit-title",
-    `${restaurant.city}. Ein Ort zum Genießen.`
+    `${displayCity}. Ein Ort zum Genießen.`
   );
 
 
   setText(
     "#address-name",
-    restaurant.fullName
+    identityFullName || identityName
   );
 
 
   setText(
     "#footer-brand",
-    restaurant.name?.toUpperCase()
+    identityLogoText.toUpperCase()
   );
 
 
   setText(
     "#footer-tagline",
-    restaurant.tagline
+    displaySlogan
   );
 
 
   setText(
     "#footer-copyright",
-    `© ${new Date().getFullYear()} ${restaurant.fullName}`
+    resolveConfigValue(
+      legal,
+      "copyrightText",
+      `© ${new Date().getFullYear()} ${displayName}`
+    )
   );
 
 
@@ -1028,20 +1489,41 @@ function renderRestaurantData() {
 
   if (addressDetails) {
 
-    addressDetails.innerHTML = `
-      ${escapeHtml(restaurant.street || "")}
-      <br>
+    const detailLines = [];
 
-      ${escapeHtml(restaurant.postalCode || "")}
-      ${escapeHtml(restaurant.city || "")}
+    if (identityStreet) {
+      detailLines.push(escapeHtml(identityStreet));
+    }
 
-      <br><br>
+    const cityLine = [
+      identityPostalCode,
+      identityCity
+    ]
+      .filter(Boolean)
+      .join(" ");
 
-      ${escapeHtml(restaurant.phone || "")}
-      <br>
+    if (cityLine) {
+      detailLines.push(escapeHtml(cityLine));
+    }
 
-      ${escapeHtml(restaurant.email || "")}
-    `;
+    const contactLines = [];
+
+    if (identityPhone) {
+      contactLines.push(`<a href="tel:${escapeHtml(identityPhone)}">${escapeHtml(identityPhone)}</a>`);
+    }
+
+    if (identityEmail) {
+      contactLines.push(`<a href="mailto:${escapeHtml(identityEmail)}">${escapeHtml(identityEmail)}</a>`);
+    }
+
+    if (contactLines.length > 0) {
+      detailLines.push(contactLines.join("<br>"));
+    }
+
+    addressDetails.innerHTML =
+      detailLines
+        .map((line) => `<div>${line}</div>`)
+        .join("");
 
   }
 
@@ -1053,42 +1535,118 @@ function renderRestaurantData() {
   if (routeLink) {
 
     const fullAddress = [
-      restaurant.street,
-      restaurant.postalCode,
-      restaurant.city,
-      restaurant.country
+      identityStreet,
+      identityPostalCode,
+      identityCity,
+      identityCountry
     ]
       .filter(Boolean)
       .join(", ");
 
+    const mapsUrl = identityMapsUrl ||
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
 
-    routeLink.href =
-      `https://www.google.com/maps/search/?api=1&query=${
-        encodeURIComponent(fullAddress)
-      }`;
-
-
+    routeLink.href = mapsUrl;
     routeLink.target = "_blank";
-
     routeLink.rel = "noopener noreferrer";
 
   }
 
 
-  document.title =
-    `${restaurant.fullName} | ${restaurant.tagline}`;
+  if (identityWebsite) {
+    const footerWebsiteLink = getElement("#footer-website-link");
+
+    if (footerWebsiteLink) {
+      footerWebsiteLink.href = identityWebsite;
+      footerWebsiteLink.target = "_blank";
+      footerWebsiteLink.rel = "noopener noreferrer";
+    }
+  }
 
 
-  const metaDescription =
-    getElement('meta[name="description"]');
+  renderSeoData();
+
+  const logoLink = getElement("#restaurant-logo");
+
+  if (logoLink && !logoLink.querySelector("img")) {
+    const logoImage = getIdentityValue("logoImage", "");
+
+    if (logoImage) {
+      logoLink.innerHTML = `<img src="${escapeHtml(logoImage)}" alt="${escapeHtml(identityLogoText)}" loading="eager">`;
+    }
+  }
+
+  renderFooterLinks();
+
+}
 
 
-  if (metaDescription) {
+function renderFooterLinks() {
 
-    metaDescription.content =
-      `${restaurant.fullName} in ${restaurant.city}. ` +
-      `${restaurant.heroSubtitle}`;
+  const footerLinks = getElement("#footer-links");
 
+  if (!footerLinks) {
+    return;
+  }
+
+  const socialLinks = [];
+  const identityWebsite = getIdentityValue("website", "");
+  const identityWhatsapp = getIdentityValue("whatsapp", "");
+  const identityInstagram = getIdentityValue("instagram", "");
+  const identityFacebook = getIdentityValue("facebook", "");
+  const identityTiktok = getIdentityValue("tiktok", "");
+  const identityYoutube = getIdentityValue("youtube", "");
+  const identityLinkedin = getIdentityValue("linkedin", "");
+
+  if (identityWebsite) {
+    socialLinks.push(`<a href="${escapeHtml(identityWebsite)}" target="_blank" rel="noopener noreferrer">Website</a>`);
+  }
+
+  if (identityWhatsapp) {
+    socialLinks.push(`<a href="https://wa.me/${escapeHtml(identityWhatsapp.replace(/\D/g, ""))}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`);
+  }
+
+  if (identityInstagram) {
+    socialLinks.push(`<a href="${escapeHtml(identityInstagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>`);
+  }
+
+  if (identityFacebook) {
+    socialLinks.push(`<a href="${escapeHtml(identityFacebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>`);
+  }
+
+  if (identityTiktok) {
+    socialLinks.push(`<a href="${escapeHtml(identityTiktok)}" target="_blank" rel="noopener noreferrer">TikTok</a>`);
+  }
+
+  if (identityYoutube) {
+    socialLinks.push(`<a href="${escapeHtml(identityYoutube)}" target="_blank" rel="noopener noreferrer">YouTube</a>`);
+  }
+
+  if (identityLinkedin) {
+    socialLinks.push(`<a href="${escapeHtml(identityLinkedin)}" target="_blank" rel="noopener noreferrer">LinkedIn</a>`);
+  }
+
+  const footerLinkMarkup = [
+    '<a href="#about">Über uns</a>',
+    '<a href="#menu" data-module-link="menu">Speisekarte</a>',
+    '<a href="#reservation" data-module-link="reservations">Reservieren</a>',
+    ...socialLinks
+  ];
+
+  footerLinks.innerHTML = footerLinkMarkup.join("");
+
+  const imprintLink = getElement("#footer-imprint");
+  const privacyLink = getElement("#footer-privacy");
+  const legal = isPlainObject(config?.legal)
+    ? config.legal
+    : null;
+
+  if (imprintLink) {
+    imprintLink.href = resolveConfigValue(legal, "imprintUrl", "#imprint");
+  }
+
+  if (privacyLink) {
+    privacyLink.href = resolveConfigValue(legal, "privacyUrl", "#privacy");
   }
 
 }
@@ -1123,7 +1681,7 @@ function renderAbout() {
   setImage(
     "#about-image",
     about.image,
-    `${config.restaurant.fullName} – Über uns`
+    `${getIdentityValue("fullName", "Restaurant")} – Über uns`
   );
 
 
@@ -1262,7 +1820,7 @@ function renderMenu() {
     items
       .map((item) => `
 
-        <div class="menu-item reveal">
+        <article class="menu-item reveal">
 
           <div class="menu-top">
 
@@ -1282,7 +1840,7 @@ function renderMenu() {
             ${escapeHtml(item.description || "")}
           </p>
 
-        </div>
+        </article>
 
       `)
       .join("");
@@ -1476,14 +2034,14 @@ function renderOpeningHours() {
 
         <div class="hours-row">
 
-          <span>
+          <dt>
             ${escapeHtml(entry.days || "")}
-          </span>
+          </dt>
 
 
-          <span>
+          <dd>
             ${escapeHtml(entry.hours || "")}
-          </span>
+          </dd>
 
         </div>
 
