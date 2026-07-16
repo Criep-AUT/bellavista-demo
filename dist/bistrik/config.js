@@ -1,14 +1,13 @@
 // ========================================
-// RESTAURANT WEBSITE TEMPLATE
-// ZENTRALE KONFIGURATION
+// RESTAURANTOS INSTANCE
+// BISTRIK PILOTKONFIGURATION
 // ========================================
 //
-// Diese Datei enthält alle kundenspezifischen
-// Einstellungen der Restaurant-Website.
+// Öffentlich belegte Daten wurden am 16.07.2026 geprüft.
+// Fehlende Betreiberangaben bleiben bewusst leer.
 //
-// Ziel:
-// Für einen neuen Kunden sollen möglichst nur
-// die Werte in dieser Datei geändert werden.
+// Sämtliche Bilder sind Demo-Platzhalter und müssen
+// vor einem produktiven Einsatz ersetzt werden.
 //
 // ========================================
 
@@ -24,9 +23,9 @@ const restaurantConfig = {
 
     // Pflichtwerte für die Basisinitialisierung:
     // templateVersion, customerId, demoMode, currency und locale.
-    templateVersion: "2.3.0",
+    templateVersion: "3.0.0",
 
-    customerId: "bellavista-001",
+    customerId: "bistrik-001",
 
     demoMode: true,
 
@@ -45,36 +44,36 @@ const restaurantConfig = {
 
   identity: {
 
-    name: "Bellavista",
+    name: "Bistrik",
 
-    fullName: "Ristorante Bellavista",
+    fullName: "Restaurant Bistrik",
 
-    slogan: "Cucina Italiana · Graz",
+    slogan: "Bosnische & österreichische Küche · Kalsdorf bei Graz",
 
-    logoText: "Bellavista",
+    logoText: "Bistrik",
 
     logoImage: "",
-    favicon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2311100f'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23d6b77a'%3EB%3C/text%3E%3C/svg%3E",
+    favicon: "assets/favicon.svg",
 
-    phone: "+43 316 123456",
+    phone: "+43 3135 82573",
 
-    email: "ciao@bellavista.at",
+    email: "",
 
-    website: "https://bellavista.example",
+    website: "",
 
-    street: "Musterstraße 12",
+    street: "Hauptstraße 62",
 
-    postalCode: "8010",
+    postalCode: "8401",
 
-    city: "Graz",
+    city: "Kalsdorf bei Graz",
 
     country: "Österreich",
 
-    googleMapsUrl: "",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Restaurant%20Bistrik%2C%20Hauptstra%C3%9Fe%2062%2C%208401%20Kalsdorf%20bei%20Graz",
 
     whatsapp: "",
     instagram: "",
-    facebook: "",
+    facebook: "https://www.facebook.com/bisstrick/",
     tiktok: "",
     youtube: "",
     linkedin: ""
@@ -88,23 +87,56 @@ const restaurantConfig = {
 
   seo: {
 
-    title: "Ristorante Bellavista | Italienisches Restaurant in Graz",
+    title: "Restaurant Bistrik | Bosnische Küche in Kalsdorf bei Graz",
 
-    description: "Italienische Küche, hausgemachte Pasta und herzliche Gastfreundschaft im Ristorante Bellavista in Graz.",
+    description: "Restaurant Bistrik in Kalsdorf bei Graz mit bosnischer und österreichischer Küche.",
 
-    keywords: "restaurant, italienisch, graz",
+    keywords: "restaurant bistrik, bistrik kalsdorf, bosnische küche kalsdorf, österreichische küche kalsdorf",
 
-    author: "Bellavista",
-    robots: "index,follow",
+    author: "Restaurant Bistrik",
+    robots: "noindex,nofollow",
     canonical: "",
-    ogTitle: "",
-    ogDescription: "",
+    ogTitle: "Restaurant Bistrik in Kalsdorf bei Graz",
+    ogDescription: "Bosnische und österreichische Küche in Kalsdorf bei Graz.",
     ogImage: "",
-    twitterTitle: "",
-    twitterDescription: "",
+    twitterTitle: "Restaurant Bistrik in Kalsdorf bei Graz",
+    twitterDescription: "Bosnische und österreichische Küche in Kalsdorf bei Graz.",
     twitterImage: "",
-    themeColor: "#11100f",
+    themeColor: "#171311",
     language: "de-AT"
+
+  },
+
+
+  // ========================================
+  // PILOT-DATENSTATUS
+  // ========================================
+
+  instance: {
+
+    id: "bistrik",
+    status: "draft",
+    dataReviewedAt: "2026-07-16",
+    productionReady: false,
+    imageStatus: "DEMO_PLACEHOLDERS_REPLACE_BEFORE_PRODUCTION",
+
+    sources: [
+      "https://de.restaurantguru.com/Bisstrick-Kalsdorf-bei-Graz",
+      "https://www.waze.com/live-map/directions/at/steiermark/kalsdorf-bei-graz/restaurant-bistrik?to=place.ChIJr5okL1m1b0cRFIdcQMKVDsg",
+      "https://www.tripadvisor.de/Restaurant_Review-g4758389-d32824814-Reviews-Restaurant_Bistrik-Kalsdorf_bei_Graz_Styria.html",
+      "https://www.facebook.com/bisstrick/"
+    ],
+
+    needsOwnerConfirmation: [
+      "Öffnungszeiten",
+      "E-Mail-Adresse",
+      "offizielle Website und Canonical URL",
+      "Geo-Koordinaten",
+      "Zahlungsarten und Reservierungsweg",
+      "Impressums- und Datenschutzdaten",
+      "Logo, Markenfarben und sämtliches Bildmaterial",
+      "vollständige Speisekarte und Preise"
+    ]
 
   },
 
@@ -117,14 +149,14 @@ const restaurantConfig = {
 
   localBusiness: {
 
-    priceRange: "€€",
+    priceRange: "€10–20",
 
     servesCuisine: [
-      "Italienisch",
-      "Mediterran"
+      "Bosnisch",
+      "Österreichisch"
     ],
 
-    telephone: "",
+    telephone: "+43 3135 82573",
 
     email: "",
 
@@ -140,12 +172,10 @@ const restaurantConfig = {
     currenciesAccepted: "EUR",
 
     paymentAccepted: [
-      "Barzahlung",
-      "Debitkarte",
       "Kreditkarte"
     ],
 
-    areaServed: "Graz und Umgebung"
+    areaServed: "Kalsdorf bei Graz"
 
   },
 
@@ -156,12 +186,12 @@ const restaurantConfig = {
 
   legal: {
 
-    company: "Ristorante Bellavista",
+    company: "",
 
-    owner: "Bellavista Team",
+    owner: "",
 
-    vatNumber: "ATU12345678",
-    commercialRegister: "Graz HRB 12345",
+    vatNumber: "",
+    commercialRegister: "",
     privacyUrl: "#privacy",
     imprintUrl: "#imprint",
     copyrightText: ""
@@ -180,30 +210,30 @@ const restaurantConfig = {
     // Pflichtwerte: name, fullName und city.
     // Alle weiteren Restaurantwerte sind optional.
 
-    name: "Bellavista",
+    name: "Bistrik",
 
-    fullName: "Ristorante Bellavista",
+    fullName: "Restaurant Bistrik",
 
-    tagline: "Cucina Italiana · Graz",
+    tagline: "Bosnische & österreichische Küche · Kalsdorf bei Graz",
 
-    eyebrow: "Cucina Italiana · Graz",
+    eyebrow: "Bosnische & österreichische Küche · Kalsdorf bei Graz",
 
-    heroTitle: "Bellavista",
+    heroTitle: "Bistrik",
 
     heroSubtitle:
-      "Wo italienische Tradition auf moderne Gastfreundschaft trifft.",
+      "Bosnische und österreichische Küche in Kalsdorf bei Graz.",
 
-    city: "Graz",
+    city: "Kalsdorf bei Graz",
 
-    postalCode: "8010",
+    postalCode: "8401",
 
-    street: "Musterstraße 12",
+    street: "Hauptstraße 62",
 
     country: "Österreich",
 
-    phone: "+43 316 123456",
+    phone: "+43 3135 82573",
 
-    email: "ciao@bellavista.at"
+    email: ""
 
   },
 
@@ -218,43 +248,43 @@ const restaurantConfig = {
     // Fehlende Werte verwenden die Template-Defaults.
     theme: {
 
-      name: "Bellavista Gold",
+      name: "Bistrik Pilot",
 
-      primary: "#d6b77a",
+      primary: "#c9a66b",
 
-      primaryLight: "#ead29f",
+      primaryLight: "#e1c58f",
 
-      background: "#11100f",
+      background: "#171311",
 
-      surface: "#1d1b19",
+      surface: "#241d19",
 
-      text: "#f5f0e6",
+      text: "#f7f1e7",
 
-      textMuted: "#b9b1a4",
+      textMuted: "#beb2a4",
 
       success: "#78a77c",
 
-      warning: "#d6b77a",
+      warning: "#c9a66b",
 
-      danger: "#bb6b5c"
+      danger: "#a55347"
 
     },
 
     colors: {
 
-      background: "#11100f",
+      background: "#171311",
 
-      backgroundSoft: "#181715",
+      backgroundSoft: "#1e1815",
 
-      backgroundCard: "#1d1b19",
+      backgroundCard: "#241d19",
 
-      textPrimary: "#f5f0e6",
+      textPrimary: "#f7f1e7",
 
-      textMuted: "#b9b1a4",
+      textMuted: "#beb2a4",
 
-      accent: "#d6b77a",
+      accent: "#c9a66b",
 
-      accentLight: "#ead29f"
+      accentLight: "#e1c58f"
 
     }
 
@@ -298,7 +328,7 @@ const restaurantConfig = {
 
       status: "included",
 
-      validFrom: "2026-07-14",
+      validFrom: null,
 
       validUntil: null,
 
@@ -319,7 +349,7 @@ const restaurantConfig = {
 
       status: "included",
 
-      validFrom: "2026-07-14",
+      validFrom: null,
 
       validUntil: null,
 
@@ -336,11 +366,11 @@ const restaurantConfig = {
 
     reviews: {
 
-      enabled: true,
+      enabled: false,
 
-      status: "included",
+      status: "inactive",
 
-      validFrom: "2026-07-14",
+      validFrom: null,
 
       validUntil: null,
 
@@ -356,13 +386,13 @@ const restaurantConfig = {
     // ----------------------------------------
 
     reservations: {
-  enabled: true,
-  status: "trial",
-  validFrom: "2026-07-14",
-  validUntil: "2026-10-14",
-  gracePeriodDays: 7,
-  monthlyPrice: 19.90
-},
+      enabled: true,
+      status: "included",
+      validFrom: null,
+      validUntil: null,
+      gracePeriodDays: 0,
+      monthlyPrice: 19.90
+    },
 
 
     // ----------------------------------------
@@ -371,15 +401,15 @@ const restaurantConfig = {
 
     analytics: {
 
-      enabled: true,
+      enabled: false,
 
-      status: "trial",
+      status: "inactive",
 
-      validFrom: "2026-07-14",
+      validFrom: null,
 
-      validUntil: "2026-10-14",
+      validUntil: null,
 
-      gracePeriodDays: 7,
+      gracePeriodDays: 0,
 
       monthlyPrice: 14.90
 
@@ -457,18 +487,19 @@ const restaurantConfig = {
 
   about: {
 
-    label: "La nostra storia",
+    label: "Restaurant Bistrik",
 
-    title: "Italien beginnt am Tisch.",
+    title: "Bosnische Küche in Kalsdorf.",
 
     paragraphs: [
 
-      "Im Bellavista verbinden wir traditionelle italienische Rezepte mit modernen Ideen und sorgfältig ausgewählten Zutaten.",
+      "Das Restaurant Bistrik befindet sich in der Hauptstraße 62 in Kalsdorf bei Graz.",
 
-      "Hausgemachte Pasta, aromatische Tomaten, feines Olivenöl und ehrliche Gastfreundschaft stehen im Mittelpunkt unserer Küche."
+      "Öffnungszeiten und Speisenangebot basieren derzeit auf öffentlich verfügbaren Verzeichnisdaten und benötigen noch die Bestätigung des Betriebs."
 
     ],
 
+    // Vorhandener RestaurantOS-Demo-Platzhalter; vor Livegang ersetzen.
     image:
       "https://images.unsplash.com/photo-1579684947550-22e945225d9a?auto=format&fit=crop&w=1200&q=85"
 
@@ -483,43 +514,40 @@ const restaurantConfig = {
 
     {
 
-      name: "Tagliatelle al Tartufo",
+      name: "Ćevapčići",
 
       description:
-        "Hausgemachte Tagliatelle, Trüffelcreme und Parmigiano Reggiano.",
+        "Im Fladenbrot mit Kajmak und Ajvar.",
 
-      price: 21.90,
+      price: null,
 
-      image:
-        "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85"
+      image: ""
 
     },
 
     {
 
-      name: "Pizza Bellavista",
+      name: "Tarhana",
 
       description:
-        "San-Marzano-Tomaten, Fior di Latte, Prosciutto und Rucola.",
+        "Suppe mit Kalbfleisch.",
 
-      price: 16.90,
+      price: null,
 
-      image:
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85"
+      image: ""
 
     },
 
     {
 
-      name: "Tiramisù Classico",
+      name: "Begova",
 
       description:
-        "Mascarpone, Espresso, Savoiardi und feiner Kakao.",
+        "Hühnercremesuppe.",
 
-      price: 8.50,
+      price: null,
 
-      image:
-        "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85"
+      image: ""
 
     }
 
@@ -534,67 +562,34 @@ const restaurantConfig = {
 
     {
 
-      name: "Bruschetta Classica",
+      name: "Ćevapčići",
 
       description:
-        "Geröstetes Brot, Tomaten, Basilikum und natives Olivenöl.",
+        "Im Fladenbrot mit Kajmak und Ajvar.",
 
-      price: 8.90
+      price: null
 
     },
 
     {
 
-      name: "Burrata Pugliese",
+      name: "Tarhana",
 
       description:
-        "Cremige Burrata, Tomaten, Basilikum und Olivenöl.",
+        "Suppe mit Kalbfleisch.",
 
-      price: 13.90
+      price: null
 
     },
 
     {
 
-      name: "Spaghetti Carbonara",
+      name: "Begova",
 
       description:
-        "Guanciale, Pecorino Romano, Eigelb und schwarzer Pfeffer.",
+        "Hühnercremesuppe.",
 
-      price: 17.90
-
-    },
-
-    {
-
-      name: "Risotto ai Funghi",
-
-      description:
-        "Cremiges Risotto mit Pilzen, Parmesan und Kräutern.",
-
-      price: 19.50
-
-    },
-
-    {
-
-      name: "Saltimbocca alla Romana",
-
-      description:
-        "Kalbfleisch, Prosciutto, Salbei und Weißweinjus.",
-
-      price: 24.90
-
-    },
-
-    {
-
-      name: "Panna Cotta",
-
-      description:
-        "Klassische Panna Cotta mit saisonalen Früchten.",
-
-      price: 7.90
+      price: null
 
     }
 
@@ -607,46 +602,9 @@ const restaurantConfig = {
 
   reviews: {
 
-    rating: 4.8,
+    sourceText: "Noch keine freigegebenen Bewertungen",
 
-    sourceText: "Beispielbewertung · Demo",
-
-    entries: [
-
-      {
-
-        author: "Anna M.",
-
-        rating: 5,
-
-        text:
-          "Wunderbares Essen, großartige Atmosphäre und ein Service, bei dem man sich sofort willkommen fühlt."
-
-      },
-
-      {
-
-        author: "Markus K.",
-
-        rating: 5,
-
-        text:
-          "Die Pasta war hervorragend und das Ambiente perfekt für einen entspannten Abend zu zweit."
-
-      },
-
-      {
-
-        author: "Julia S.",
-
-        rating: 5,
-
-        text:
-          "Von der Vorspeise bis zum Tiramisù einfach ausgezeichnet. Wir kommen definitiv wieder."
-
-      }
-
-    ]
+    entries: []
 
   },
 
@@ -661,6 +619,36 @@ const restaurantConfig = {
 
       days: "Montag",
 
+      hours: "11:00 – 20:00",
+
+      schemaHours: ["Mo 11:00-20:00"]
+
+    },
+
+    {
+
+      days: "Dienstag",
+
+      hours: "11:00 – 20:00",
+
+      schemaHours: ["Tu 11:00-20:00"]
+
+    },
+
+    {
+
+      days: "Mittwoch",
+
+      hours: "11:00 – 16:00",
+
+      schemaHours: ["We 11:00-16:00"]
+
+    },
+
+    {
+
+      days: "Donnerstag",
+
       hours: "Ruhetag",
 
       schemaHours: []
@@ -669,26 +657,11 @@ const restaurantConfig = {
 
     {
 
-      days: "Dienstag – Donnerstag",
-
-      hours: "11:30 – 14:30 / 17:30 – 22:00",
-
-      schemaHours: [
-        "Tu-Th 11:30-14:30",
-        "Tu-Th 17:30-22:00"
-      ]
-
-    },
-
-    {
-
       days: "Freitag – Samstag",
 
-      hours: "11:30 – 23:00",
+      hours: "11:00 – 21:00",
 
-      schemaHours: [
-        "Fr-Sa 11:30-23:00"
-      ]
+      schemaHours: ["Fr-Sa 11:00-21:00"]
 
     },
 
@@ -696,11 +669,9 @@ const restaurantConfig = {
 
       days: "Sonntag",
 
-      hours: "11:30 – 21:00",
+      hours: "11:00 – 20:00",
 
-      schemaHours: [
-        "Su 11:30-21:00"
-      ]
+      schemaHours: ["Su 11:00-20:00"]
 
     }
 
@@ -719,7 +690,7 @@ const restaurantConfig = {
         "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85",
 
       alt:
-        "Stilvoller Restaurant-Innenraum"
+        "Demo-Platzhalter – Restaurant-Innenraum"
 
     },
 
@@ -729,7 +700,7 @@ const restaurantConfig = {
         "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=85",
 
       alt:
-        "Gemütlicher Tisch im Restaurant"
+        "Demo-Platzhalter – gedeckter Tisch"
 
     },
 
@@ -739,7 +710,7 @@ const restaurantConfig = {
         "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85",
 
       alt:
-        "Restaurant-Atmosphäre am Abend"
+        "Demo-Platzhalter – Restaurant-Atmosphäre"
 
     },
 
@@ -749,7 +720,7 @@ const restaurantConfig = {
         "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=85",
 
       alt:
-        "Italienisches Gericht im Bellavista"
+        "Demo-Platzhalter – Gericht"
 
     }
 
