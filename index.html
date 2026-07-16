@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Restaurant Website</title>
+
+  <meta
+    name="description"
+    content="Restaurant Website"
+  >
+
+  <meta name="theme-color" content="#121212">
+
+  <link rel="stylesheet" href="style.css?v=11">
+</head>
+
+
+<body>
+
+  <!-- =====================================
+       NAVIGATION
+  ====================================== -->
+
+  <nav
+    class="navbar"
+    aria-label="Hauptnavigation"
+  >
+
+    <a
+      href="#home"
+      class="logo"
+      id="restaurant-logo"
+      aria-label="Zur Startseite"
+    >
+      RESTAURANT
+    </a>
+
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="main-navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+
+    <ul
+      class="nav-links"
+      id="main-navigation"
+    >
+
+      <li>
+        <a href="#about">
+          Über uns
+        </a>
+      </li>
+
+      <li data-module-link="menu">
+        <a href="#menu">
+          Speisekarte
+        </a>
+      </li>
+
+      <li data-module-link="gallery">
+        <a href="#gallery">
+          Galerie
+        </a>
+      </li>
+
+      <li data-module-link="reviews">
+        <a href="#reviews">
+          Bewertungen
+        </a>
+      </li>
+
+      <li data-module-link="reservations">
+        <a href="#reservation">
+          Reservieren
+        </a>
+      </li>
+
+      <li>
+        <a href="#visit">
+          Besuchen
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+  <button
+    class="nav-overlay"
+    type="button"
+    aria-label="Menü schließen"
+    tabindex="-1"
+  ></button>
+
+
+  <main>
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section
+      class="hero"
+      id="home"
+    >
+
+      <div class="hero-content reveal">
+
+        <div
+          class="eyebrow"
+          id="hero-eyebrow"
+        >
+          Restaurant
+        </div>
+
+        <h1 id="hero-title">
+          Restaurant
+        </h1>
+
+        <p
+          class="subtitle"
+          id="hero-subtitle"
+        >
+          Willkommen bei uns.
+        </p>
+
+
+        <div class="buttons">
+
+          <a
+            href="#reservation"
+            class="btn btn-primary"
+            data-module-link="reservations"
+          >
+            Tisch reservieren
+          </a>
+
+          <a
+            href="#menu"
+            class="btn btn-secondary"
+            data-module-link="menu"
+          >
+            Speisekarte entdecken
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         ÜBER UNS
+    ====================================== -->
+
+    <section
+      class="section"
+      id="about"
+    >
+
+      <div class="container about-grid">
+
+
+        <div
+          class="image-frame reveal"
+          data-media-container
+        >
+
+          <img
+            class="about-image"
+            id="about-image"
+            data-media-image
+            alt=""
+            loading="lazy"
+            decoding="async"
+          >
+
+        </div>
+
+
+        <div class="about-copy reveal">
+
+          <div
+            class="section-label"
+            id="about-label"
+          >
+            Über uns
+          </div>
+
+          <h2
+            class="section-title"
+            id="about-title"
+          >
+            Willkommen.
+          </h2>
+
+          <div id="about-paragraphs"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         SIGNATURE GERICHTE
+    ====================================== -->
+
+    <section class="section signature">
+
+      <div class="container">
+
+        <div class="signature-header reveal">
+
+          <div class="section-label">
+            Unsere Empfehlungen
+          </div>
+
+          <h2 class="section-title">
+            Unsere Signatures
+          </h2>
+
+          <p class="section-text centered-text">
+            Eine Auswahl besonderer Gerichte unseres Hauses.
+          </p>
+
+        </div>
+
+
+        <div
+          class="dish-grid"
+          id="signature-dishes"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         SPEISEKARTE
+    ====================================== -->
+
+    <section
+      class="section"
+      id="menu"
+      data-module-section="menu"
+    >
+
+      <div class="container">
+
+        <div class="menu-header reveal">
+
+          <div class="section-label">
+            Speisekarte
+          </div>
+
+          <h2 class="section-title">
+            Ein kleiner Blick in unsere Küche.
+          </h2>
+
+          <p class="section-text">
+            Entdecken Sie eine Auswahl unserer Gerichte.
+          </p>
+
+        </div>
+
+
+        <div
+          class="menu-grid"
+          id="menu-items"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         GALERIE
+    ====================================== -->
+
+    <section
+      class="section gallery-section"
+      id="gallery"
+      data-module-section="gallery"
+    >
+
+      <div class="container">
+
+        <div class="gallery-header reveal">
+
+          <div class="section-label">
+            Atmosphäre
+          </div>
+
+          <h2 class="section-title">
+            Ein Blick zu uns.
+          </h2>
+
+          <p class="section-text">
+            Eindrücke aus unserem Restaurant.
+          </p>
+
+        </div>
+
+
+        <div
+          class="gallery-grid"
+          id="gallery-grid"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         BEWERTUNGEN
+    ====================================== -->
+
+    <section
+      class="section reviews-section"
+      id="reviews"
+      data-module-section="reviews"
+    >
+
+      <div class="container">
+
+
+        <div class="reviews-header reveal">
+
+          <div class="section-label">
+            Was unsere Gäste sagen
+          </div>
+
+          <h2 class="section-title">
+            Gastfreundschaft, die in Erinnerung bleibt.
+          </h2>
+
+
+          <div class="rating-summary">
+
+            <span
+              class="rating-score"
+              id="rating-score"
+            >
+              5,0
+            </span>
+
+            <div>
+
+              <div
+                class="stars"
+                aria-label="Bewertung"
+              >
+                ★★★★★
+              </div>
+
+              <p
+                class="rating-text"
+                id="rating-source"
+              >
+                Gästebewertungen
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="reviews-grid"
+          id="reviews-grid"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         RESERVIERUNG
+    ====================================== -->
+
+    <section
+      class="section reservation"
+      id="reservation"
+      data-module-section="reservations"
+    >
+
+      <div class="container reservation-box reveal">
+
+        <div class="section-label">
+          Reservierung
+        </div>
+
+        <h2 class="section-title">
+          Ihr Tisch wartet.
+        </h2>
+
+        <p class="section-text centered-text">
+          Senden Sie uns Ihre Reservierungsanfrage.
+          Wir bestätigen Ihren Tisch anschließend persönlich.
+        </p>
+
+
+        <form
+          class="reservation-form"
+          id="reservation-form"
+        >
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Ihr Name"
+            autocomplete="name"
+            required
+          >
+
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Telefonnummer"
+            autocomplete="tel"
+            required
+          >
+
+          <input
+            type="date"
+            name="date"
+            required
+          >
+
+          <select
+            name="guests"
+            required
+          >
+
+            <option value="">
+              Personen auswählen
+            </option>
+
+            <option value="1">
+              1 Person
+            </option>
+
+            <option value="2">
+              2 Personen
+            </option>
+
+            <option value="3">
+              3 Personen
+            </option>
+
+            <option value="4">
+              4 Personen
+            </option>
+
+            <option value="5">
+              5 Personen
+            </option>
+
+            <option value="6+">
+              6+ Personen
+            </option>
+
+          </select>
+
+          <textarea
+            name="message"
+            placeholder="Besondere Wünsche oder Nachricht"
+          ></textarea>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Reservierung anfragen
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         ÖFFNUNGSZEITEN & STANDORT
+    ====================================== -->
+
+    <section
+      class="section"
+      id="visit"
+    >
+
+      <div class="container visit-grid">
+
+
+        <div class="reveal">
+
+          <div class="section-label">
+            Besuchen Sie uns
+          </div>
+
+          <h2
+            class="section-title"
+            id="visit-title"
+          >
+            Wir freuen uns auf Ihren Besuch.
+          </h2>
+
+          <p class="section-text">
+            Genießen Sie gutes Essen in entspannter Atmosphäre.
+          </p>
+
+
+          <div
+            class="hours"
+            id="opening-hours"
+          ></div>
+
+        </div>
+
+
+
+        <div class="map-placeholder reveal">
+
+          <div class="address-card">
+
+            <strong id="address-name">
+              Restaurant
+            </strong>
+
+            <p id="address-details">
+              Adresse
+            </p>
+
+            <a
+              href="#"
+              class="address-link"
+              id="route-link"
+            >
+              Route planen →
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div>
+
+        <div
+          class="footer-brand"
+          id="footer-brand"
+        >
+          RESTAURANT
+        </div>
+
+        <p
+          class="footer-tagline"
+          id="footer-tagline"
+        >
+          Restaurant
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="#about">
+          Über uns
+        </a>
+
+        <a
+          href="#menu"
+          data-module-link="menu"
+        >
+          Speisekarte
+        </a>
+
+        <a
+          href="#reservation"
+          data-module-link="reservations"
+        >
+          Reservieren
+        </a>
+
+      </div>
+
+
+      <div class="footer-text">
+
+        <span id="footer-copyright">
+          © 2026 Restaurant
+        </span>
+
+        <br>
+
+        <a href="#">
+          Impressum
+        </a>
+
+        ·
+
+        <a href="#">
+          Datenschutz
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =====================================
+       SCRIPTS
+       
+       WICHTIG:
+       config.js muss VOR script.js geladen werden.
+  ====================================== -->
+
+  <script src="config.js?v=3"></script>
+  <script src="script.js?v=13"></script>
+
+</body>
+
+</html>
