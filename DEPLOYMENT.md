@@ -20,9 +20,9 @@ node scripts/build-instances.js --instance bistrik --production
 
 ## Deployment-Modi
 
-- `demo`: fehlende oder Platzhalter-Domains sind mit Warnung zulässig. Der Robots-Wert kommt aus der Instanz-Config.
+- `demo`: fehlende oder Platzhalter-Domains sind mit Warnung zulässig. Der Robots-Wert kommt aus der Instanz-Config. `presentationMode: "pitch"` kennzeichnet den Output als unverbindlichen Entwurf.
 - `staging`: eine öffentliche HTTPS-Domain ist erforderlich; der Generator erzwingt statisch und in der ausgegebenen Config `noindex,nofollow`.
-- `production`: erzwingt `index,follow`, eine öffentliche HTTPS-Domain, vollständige Legal-Daten, einen freigegebenen Instanzstatus und keine offenen Betreiberbestätigungen.
+- `production`: erzwingt `index,follow`, eine öffentliche HTTPS-Domain, vollständige Legal-Daten, einen freigegebenen Instanzstatus und ausschließlich bestätigte `ownerConfirmation`-Werte. Pitch-Hinweise werden nicht ausgegeben.
 
 Der Schalter `--production` führt die Produktionsprüfung unabhängig vom im Manifest eingetragenen Modus aus. Eine fehlgeschlagene Prüfung schreibt für die betroffene Instanz keine neue Ausgabe.
 
@@ -37,7 +37,7 @@ Die Root-Dateien `index.html`, `robots.txt` und `sitemap.xml` werden ebenfalls a
 Vor einem Livegang:
 
 1. Produktionsdomain in `seo.canonical`, `identity.website` und `localBusiness.website` eintragen.
-2. Betreiberstatus und Bestätigungen in `instance` abschließen.
+2. Betreiberstatus und alle Werte unter `instance.ownerConfirmation` bestätigen.
 3. Legal-Daten und freigegebene Assets hinterlegen.
 4. Produktionsprüfung ausführen.
 5. den passenden Instanzordner zusammen mit `dist/shared/` veröffentlichen.

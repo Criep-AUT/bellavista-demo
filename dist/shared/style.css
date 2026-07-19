@@ -96,6 +96,46 @@ body.menu-open {
   overscroll-behavior: none;
 }
 
+.presentation-notice {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
+  z-index: 2100;
+
+  width: min(760px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: var(--cream);
+  background: rgba(29, 27, 25, 0.96);
+  border: 1px solid rgba(214, 183, 122, 0.48);
+  box-shadow: var(--shadow-navigation);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  pointer-events: none;
+}
+
+.presentation-notice strong {
+  color: var(--gold-light);
+  white-space: nowrap;
+}
+
+.presentation-notice ~ footer #footer-imprint,
+.presentation-notice ~ footer #footer-privacy,
+.presentation-notice ~ footer .legal-separator {
+  display: none;
+}
+
 img {
   width: 100%;
   display: block;
@@ -1191,6 +1231,24 @@ footer {
 ======================================== */
 
 @media (max-width: 600px) {
+
+  .presentation-notice {
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+
+    width: calc(100% - 16px);
+    padding: 10px 12px;
+
+    flex-direction: column;
+    gap: 2px;
+
+    font-size: 11px;
+  }
+
+  .presentation-notice strong {
+    white-space: normal;
+  }
 
   .container {
     width: 90%;

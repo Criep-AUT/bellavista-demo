@@ -18,7 +18,7 @@ Das Build-Skript erkennt doppelte IDs und Outputs, ungültige oder aus dem Proje
 
 1. Einen neuen Ordner `instances/<id>/` anlegen.
 2. Eine bestehende `config.js` kopieren und ausschließlich mit bestätigten Kundendaten anpassen.
-3. `instance.status`, `needsOwnerConfirmation` und den gewünschten Deployment-Modus setzen.
+3. `instance.status`, `instance.presentationMode`, die Booleschen Werte unter `instance.ownerConfirmation` und den gewünschten Deployment-Modus setzen.
 4. eigene Dateien unter `instances/<id>/assets/` hinterlegen.
 5. einen eindeutigen Eintrag in `instances/manifest.js` ergänzen.
 6. mit `node scripts/build-instances.js --instance <id>` als Demo bauen.
@@ -26,3 +26,4 @@ Das Build-Skript erkennt doppelte IDs und Outputs, ungültige oder aus dem Proje
 
 Gemeinsame Dateien wie `style.css`, `script.js`, `seo-utils.js` und die HTML-Vorlage werden niemals in einen Instanz-Quellordner kopiert. Generierte `index.html`, `config.js`, `robots.txt` und `sitemap.xml` unter `dist/` werden ebenfalls nie direkt editiert.
 
+`presentationMode: "pitch"` erzeugt außerhalb von Production einen dezenten Entwurfshinweis. Im Production-Modus wird dieser Hinweis grundsätzlich nicht ausgegeben. Vor einem Produktionsbuild müssen alle erforderlichen `ownerConfirmation`-Werte `true` sein.

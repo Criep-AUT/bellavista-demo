@@ -24,7 +24,7 @@ const restaurantConfig = {
 
     // Pflichtwerte für die Basisinitialisierung:
     // templateVersion, customerId, demoMode, currency und locale.
-    templateVersion: "3.0.0",
+    templateVersion: "3.1.0",
 
     customerId: "bellavista-001",
 

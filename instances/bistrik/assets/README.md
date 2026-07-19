@@ -6,7 +6,7 @@ Vor einem produktiven Einsatz müssen ersetzt beziehungsweise freigegeben werden
 
 - Logo und Markenfarben
 - Hero-Hintergrund
-- Reservierungs-Hintergrund
+- Reservierungs-Hintergrund, falls das derzeit deaktivierte Modul später freigegeben wird
 - Standort-Hintergrund
 - About-Bild
 - alle vier Galerie-Bilder
@@ -14,4 +14,3 @@ Vor einem produktiven Einsatz müssen ersetzt beziehungsweise freigegeben werden
 - Open-Graph- und Twitter-Bild
 
 Die momentan referenzierten Unsplash-Bilder stammen ausschließlich aus der bestehenden RestaurantOS-Demo und sind ausdrücklich als Platzhalter gekennzeichnet.
-

@@ -23,7 +23,7 @@ const restaurantConfig = {
 
     // Pflichtwerte für die Basisinitialisierung:
     // templateVersion, customerId, demoMode, currency und locale.
-    templateVersion: "3.0.0",
+    templateVersion: "3.1.0",
 
     customerId: "bistrik-001",
 
@@ -116,6 +116,7 @@ const restaurantConfig = {
 
     id: "bistrik",
     status: "draft",
+    presentationMode: "pitch",
     dataReviewedAt: "2026-07-16",
     productionReady: false,
     imageStatus: "DEMO_PLACEHOLDERS_REPLACE_BEFORE_PRODUCTION",
@@ -127,16 +128,23 @@ const restaurantConfig = {
       "https://www.facebook.com/bisstrick/"
     ],
 
-    needsOwnerConfirmation: [
-      "Öffnungszeiten",
-      "E-Mail-Adresse",
-      "offizielle Website und Canonical URL",
-      "Geo-Koordinaten",
-      "Zahlungsarten und Reservierungsweg",
-      "Impressums- und Datenschutzdaten",
-      "Logo, Markenfarben und sämtliches Bildmaterial",
-      "vollständige Speisekarte und Preise"
-    ]
+    ownerConfirmation: {
+      identity: false,
+      branding: false,
+      geo: false,
+      openingHours: false,
+      menu: false,
+      prices: false,
+      allergens: false,
+      legal: false,
+      images: false,
+      reservations: false,
+      domain: false,
+      socialMedia: false,
+      paymentMethods: false,
+      publication: false,
+      referenceUse: false
+    }
 
   },
 
@@ -386,8 +394,8 @@ const restaurantConfig = {
     // ----------------------------------------
 
     reservations: {
-      enabled: true,
-      status: "included",
+      enabled: false,
+      status: "inactive",
       validFrom: null,
       validUntil: null,
       gracePeriodDays: 0,

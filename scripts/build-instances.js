@@ -18,6 +18,7 @@ const TEMPLATE_TOKENS = [
   "GENERATED_NOTICE",
   "LANGUAGE",
   "SEO_BLOCK",
+  "PRESENTATION_NOTICE",
   "STYLE_PATH",
   "SEO_UTILS_PATH",
   "CONFIG_PATH",
@@ -218,6 +219,33 @@ function validateConfig(config, model) {
     });
   }
 
+  const instance = config.instance;
+  if (seoUtils.isPlainObject(instance)) {
+    if (
+      instance.presentationMode !== undefined &&
+      !["pitch", "standard"].includes(instance.presentationMode)
+    ) {
+      errors.push("instance.presentationMode muss pitch oder standard sein.");
+    }
+
+    if (instance.needsOwnerConfirmation !== undefined) {
+      errors.push("instance.needsOwnerConfirmation ist veraltet; ownerConfirmation verwenden.");
+    }
+
+    if (
+      instance.ownerConfirmation !== undefined &&
+      !seoUtils.isPlainObject(instance.ownerConfirmation)
+    ) {
+      errors.push("instance.ownerConfirmation muss ein Objekt sein.");
+    } else if (seoUtils.isPlainObject(instance.ownerConfirmation)) {
+      Object.entries(instance.ownerConfirmation).forEach(([field, confirmed]) => {
+        if (typeof confirmed !== "boolean") {
+          errors.push(`instance.ownerConfirmation.${field} muss ein Boolean sein.`);
+        }
+      });
+    }
+  }
+
   return { valid: errors.length === 0, errors, warnings };
 }
 
@@ -238,8 +266,20 @@ function validateProduction(config) {
       errors.push("instance.status ist noch nicht approved oder production.");
     }
 
-    if (Array.isArray(instance.needsOwnerConfirmation) && instance.needsOwnerConfirmation.length > 0) {
-      errors.push(`Offene Betreiberbestätigungen: ${instance.needsOwnerConfirmation.join(", ")}`);
+    if (instance.needsOwnerConfirmation !== undefined) {
+      errors.push("instance.needsOwnerConfirmation ist veraltet; ownerConfirmation verwenden.");
+    }
+
+    if (!seoUtils.isPlainObject(instance.ownerConfirmation)) {
+      errors.push("instance.ownerConfirmation ist für Produktion erforderlich.");
+    } else {
+      const openConfirmations = Object.entries(instance.ownerConfirmation)
+        .filter(([, confirmed]) => confirmed !== true)
+        .map(([field]) => field);
+
+      if (openConfirmations.length > 0) {
+        errors.push(`Offene Betreiberbestätigungen: ${openConfirmations.join(", ")}`);
+      }
     }
 
     if (instance.productionReady === false) errors.push("instance.productionReady ist false.");
@@ -339,7 +379,20 @@ function validateTemplate(template) {
   }
 }
 
-function renderHtml(template, entry, model, resourcePaths, mode) {
+function createPresentationNotice(config, mode) {
+  if (mode === "production" || config?.instance?.presentationMode !== "pitch") {
+    return "";
+  }
+
+  return [
+    '  <aside class="presentation-notice" role="note" aria-label="Hinweis zum Website-Entwurf">',
+    "    <strong>Unverbindlicher Website-Entwurf</strong>",
+    "    <span>Keine offizielle Restaurant-Website. Inhalte und Öffnungszeiten müssen vom Betreiber bestätigt werden.</span>",
+    "  </aside>"
+  ].join("\n");
+}
+
+function renderHtml(template, entry, config, model, resourcePaths, mode) {
   const notice = [
     "GENERATED FILE",
     "Do not edit manually.",
@@ -351,6 +404,7 @@ function renderHtml(template, entry, model, resourcePaths, mode) {
     GENERATED_NOTICE: notice,
     LANGUAGE: escapeHtml(model.language),
     SEO_BLOCK: createSeoBlock(model),
+    PRESENTATION_NOTICE: createPresentationNotice(config, mode),
     STYLE_PATH: resourcePaths.style,
     SEO_UTILS_PATH: resourcePaths.seoUtils,
     CONFIG_PATH: resourcePaths.config,
@@ -462,7 +516,7 @@ function buildInstance(entry, template, options = {}) {
     }
   }
 
-  const html = renderHtml(template, entry, model, {
+  const html = renderHtml(template, entry, effectiveConfig, model, {
     style: "../shared/style.css",
     seoUtils: "../shared/seo-utils.js",
     config: "config.js",
@@ -479,7 +533,7 @@ function buildInstance(entry, template, options = {}) {
   else fs.rmSync(destinationAssets, { recursive: true, force: true });
 
   if (entry.rootDemo) {
-    const rootHtml = renderHtml(template, entry, model, {
+    const rootHtml = renderHtml(template, entry, effectiveConfig, model, {
       style: "style.css",
       seoUtils: "seo-utils.js",
       config: entry.config.replaceAll("\\", "/"),
@@ -572,6 +626,7 @@ if (require.main === module) main();
 
 module.exports = {
   buildInstance,
+  createPresentationNotice,
   createRobots,
   createSeoBlock,
   createSitemap,
